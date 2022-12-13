@@ -1,0 +1,22 @@
+[
+  {
+    "pais": "brasil",
+    "codigo_b3": "PETR4",
+    "data_compra": "2022-10-27",
+    "quantidade_compra": "100",
+    "valor_compra": "32.86",
+    "debito_total_compra": "3292.59",
+    "stop_venda": "19.67",
+    "alvo_venda": "33.73"
+  },
+  {
+    "pais": "eua",
+    "codigo_b3": "AAPL",
+    "data_compra": "2020-07-20",
+    "quantidade_compra": "2",
+    "valor_compra": "94.25",
+    "debito_total_compra": "188.5",
+    "stop_venda": "139",
+    "alvo_venda": "176"
+  }
+]

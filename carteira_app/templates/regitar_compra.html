@@ -1,0 +1,70 @@
+{% extends "base_generic.html" %}
+
+{% block canonical %}
+<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/cheatsheet/">
+{% endblock %}
+
+{% block content %}
+<form action='/carteira_app/registrar_compra/' method='POST'>
+    {% csrf_token %}
+    <br>
+    <div class="col-md-4">
+        <label for="pais" class="form-label">State</label>
+        <select id="pais" class="form-select" name="pais">
+            <option selected value="brasil">Brasil</option>
+            <option value="eua">Eua</option>
+        </select>
+    </div>
+    <br>
+    <div class="col-md-4">
+        <label for="codigo_b3" class="form-label">Código B3</label>
+        <input type="text" name="codigo_b3" class="form-control" id="codigo_b3">
+    </div>
+    <br>
+    <div class="col-md-4">
+        <label for="data_compra" class="form-label">Data da compra</label>
+        <input type="date" name="data_compra" class="form-control" id="data_compra">
+    </div>
+    <br>
+    <div class="col-md-4">
+        <label for="quantidade_compra" class="form-label">Quantidade</label>
+        <input type="text" name="quantidade_compra" class="form-control" id="quantidade_compra">
+    </div>
+    <br>
+    <div class="col-md-4">
+        <label for="valor_compra" class="form-label">Valor da ordem em R$</label>
+        <input type="number" step="0.01" name="valor_compra" class="form-control" id="valor_compra">
+    </div>
+    <br>
+    <div class="col-md-4">
+        <label for="debito_total_compra" class="form-label">Valor DEBITADO em R$</label>
+        <input type="number" step="0.01" name="debito_total_compra" class="form-control" id="debito_total_compra">
+    </div>
+    <br>
+    <div class="col-md-4">
+        <label for="stop_venda" class="form-label">Stop em R$</label>
+        <input type="number" step="0.01" name="stop_venda" class="form-control" id="stop_venda">
+    </div>
+    <br>
+    <div class="col-md-4">
+        <label for="alvo_venda" class="form-label">Alvo em R$</label>
+        <input type="number" step="0.01" name="alvo_venda" class="form-control" id="alvo_venda">
+    </div>
+    <br>
+    <!--
+    <div class="col-md-4">
+        <label for="inputState" class="form-label">State</label>
+        <select id="inputState" class="form-select">
+            <option selected>Choose...</option>
+            <option>...</option>
+        </select>
+    </div>
+    -->
+    <br>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Registra compra</button>
+    </div>
+      
+    
+</form>
+{% endblock %}
