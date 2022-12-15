@@ -10,12 +10,10 @@ def registrar_compra(request):
 
     item_novo_json = ''
 
-    print(request.POST)
-
     if request.POST:
         item_novo_json = {
             'pais' : request.POST['pais'],
-            'codigo_b3' : request.POST['codigo_b3'],
+            'codigo_b3' : request.POST['codigo_b3'].upper(),
             'data_compra' : request.POST['data_compra'],
             'quantidade_compra' : request.POST['quantidade_compra'],
             'valor_compra' : request.POST['valor_compra'],
@@ -23,6 +21,8 @@ def registrar_compra(request):
             'stop_venda' : request.POST['stop_venda'],
             'alvo_venda': request.POST['alvo_venda']
         }
+
+        print(type(item_novo_json['data_compra']))
         
         Arquivos_Class.atualiza_carteira(item_novo_json)
 
@@ -33,7 +33,7 @@ def consultar_carteira(request,pais):
     conteudo = {
         'pais' : pais,
         'carteira' : Arquivos_Class.consultar_carteira(),
-        'fechamento' : Arquivos_Class.carrega_fechamento_ajustado()
+        #'fechamento' : Arquivos_Class.carrega_fechamento_ajustado()
     }
     
     return render (request, 'consultar_carteira.html', context=conteudo)

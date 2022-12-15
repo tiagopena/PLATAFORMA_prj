@@ -180,42 +180,49 @@
         <th scope="col">Código</th>
         <th scope="col">País</th>
         <th scope="col">Compra</th>
+        <th scope="col">Tempo</th>
         <th scope="col">Quantidade</th>
         <th scope="col">Ordem</th>
         <th scope="col">Débito</th>
         <th scope="col">Fechamento</th>
+        <th scope="col">Lucro</th>
         <th scope="col">Stop</th>
         <th scope="col">Alvo</th>
       </tr>
     </thead>
     <tbody>
-      {% for item01 in fechamento %}
-      {% converte_valor_float item01.valor_compra as valor_compra %}
+      {% for item01 in carteira %}
       {% fechamento item01.codigo_b3 item01.pais as valor_fechamento%}
-      {% if item01.pais >= pais %}
-      {% if valor_compra >= valor_fechamento %}
+      {% calcula_porcentagem item01.valor_compra valor_fechamento as lucro %}
+      {% formata_data item01.data_compra as data_compra %}
+      {% if item01.pais == pais %}
+      {% if lucro <= 0 %}
       <tr class="table-danger">
         <th scope="row">{{item01.codigo_b3}}</th>
-        <td>{{item01.pais}}</td>
-        <td>{% formata_data item01.data_compra %}</td>
+        <td>{{item01.pais|title}}</td>
+        <td>{{ data_compra|date:"D d M Y" }}</td>
+        <td>{{data_compra|timesince}}</td>
         <td>{{item01.quantidade_compra}}</td>
-        <td>R$ {% converte_valor_float item01.valor_compra %}</td>
-        <td>R$ {% converte_valor_float item01.debito_total_compra %}</td>
+        <td>R$ {{item01.valor_compra|floatformat:"2g"}}</td>
+        <td>R$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
         <td>R$ {{valor_fechamento}}</td>
-        <td>R$ {% converte_valor_float item01.stop_venda %}</td>
-        <td>R$ {% converte_valor_float item01.alvo_venda %}</td>
+        <td>{{lucro}} %</td>
+        <td>R$ {{item01.stop_venda|floatformat:"2g"}}</td>
+        <td>R$ {{item01.alvo_venda|floatformat:"2g"}}</td>
       </tr>
       {% else %}
       <tr class="table-success">
         <th scope="row">{{item01.codigo_b3}}</th>
-        <td>{{item01.pais}}</td>
-        <td>{% formata_data item01.data_compra %}</td>
+        <td>{{item01.pais|title}}</td>
+        <td>{{ data_compra|date:"D d M Y" }}</td>
+        <td>{{data_compra|timesince}}</td>
         <td>{{item01.quantidade_compra}}</td>
-        <td>R$ {% converte_valor_float item01.valor_compra %}</td>
-        <td>R$ {% converte_valor_float item01.debito_total_compra %}</td>
+        <td>R$ {{item01.valor_compra|floatformat:"2g"}}</td>
+        <td>R$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
         <td>R$ {{valor_fechamento}}</td>
-        <td>R$ {% converte_valor_float item01.stop_venda %}</td>
-        <td>R$ {% converte_valor_float item01.alvo_venda %}</td>
+        <td>{{lucro}} %</td>
+        <td>R$ {{item01.stop_venda|floatformat:"2g"}}</td>
+        <td>R$ {{item01.alvo_venda|floatformat:"2g"}}</td>
       </tr>
       {% endif %}
       {% endif %}
@@ -233,42 +240,49 @@
         <th scope="col">Código</th>
         <th scope="col">País</th>
         <th scope="col">Compra</th>
+        <th scope="col">Tempo</th>
         <th scope="col">Quantidade</th>
         <th scope="col">Ordem</th>
         <th scope="col">Débito</th>
         <th scope="col">Fechamento</th>
+        <th scope="col">Lucro</th>
         <th scope="col">Stop</th>
         <th scope="col">Alvo</th>
       </tr>
     </thead>
     <tbody>
-      {% for item01 in fechamento %}
-      {% converte_valor_float item01.valor_compra as valor_compra %}
-      {% fechamento item01.codigo_b3 item01.pais as valor_fechamento%}
-      {% if item01.pais >= pais %}
-      {% if valor_compra >= valor_fechamento %}
+      {% for item01 in carteira %}
+      {% fechamento item01.codigo_b3 item01.pais as valor_fechamento %}
+      {% calcula_porcentagem item01.valor_compra valor_fechamento as lucro %}
+      {% formata_data item01.data_compra as data_compra %}
+      {% if item01.pais == pais %}
+      {% if lucro <= 0 %}
       <tr class="table-danger">
         <th scope="row">{{item01.codigo_b3}}</th>
-        <td>{{item01.pais}}</td>
-        <td>{% formata_data item01.data_compra %}</td>
+        <td>{{item01.pais|title}}</td>
+        <td>{{ data_compra|date:"D d M Y" }}</td>
+        <td>{{data_compra|timesince}}</td>
         <td>{{item01.quantidade_compra}}</td>
-        <td>U$ {% converte_valor_float item01.valor_compra %}</td>
-        <td>U$ {% converte_valor_float item01.debito_total_compra %}</td>
+        <td>U$ {{item01.valor_compra|floatformat:"2g"}}</td>
+        <td>U$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
         <td>U$ {{valor_fechamento}}</td>
-        <td>U$ {% converte_valor_float item01.stop_venda %}</td>
-        <td>U$ {% converte_valor_float item01.alvo_venda %}</td>
+        <td>{{lucro}} %</td>
+        <td>U$ {{item01.stop_venda|floatformat:"2g"}}</td>
+        <td>U$ {{item01.alvo_venda|floatformat:"2g"}}</td>
       </tr>
       {% else %}
       <tr class="table-success">
         <th scope="row">{{item01.codigo_b3}}</th>
-        <td>{{item01.pais}}</td>
-        <td>{% formata_data item01.data_compra %}</td>
+        <td>{{item01.pais|title}}</td>
+        <td>{{ data_compra|date:"D d M Y" }}</td>
+        <td>{{data_compra|timesince}}</td>
         <td>{{item01.quantidade_compra}}</td>
-        <td>U$ {% converte_valor_float item01.valor_compra %}</td>
-        <td>U$ {% converte_valor_float item01.debito_total_compra %}</td>
+        <td>U$ {{item01.valor_compra|floatformat:"2g"}}</td>
+        <td>U$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
         <td>U$ {{valor_fechamento}}</td>
-        <td>U$ {% converte_valor_float item01.stop_venda %}</td>
-        <td>U$ {% converte_valor_float item01.alvo_venda %}</td>
+        <td>{{lucro}} %</td>
+        <td>U$ {{item01.stop_venda|floatformat:"2g"}}</td>
+        <td>U$ {{item01.alvo_venda|floatformat:"2g"}}</td>
       </tr>
       {% endif %}
       {% endif %}

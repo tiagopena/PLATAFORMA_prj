@@ -28,6 +28,8 @@ class Arquivos_Class(models.Model):
         item_json.append(item_novo_json)
         Arquivos_Class.cria_carteira(item_json)
 
+    '''
+
     def carrega_fechamento_ajustado():
         
         carteira_sem_fechamento =  Arquivos_Class.consultar_carteira()
@@ -52,6 +54,7 @@ class Arquivos_Class(models.Model):
                 carteira_com_fechamento.append(fechamento)
                 
         return(carteira_com_fechamento)
+    '''
 
 
     '''
