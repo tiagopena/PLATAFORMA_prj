@@ -20,7 +20,7 @@ def registrar_compra(request):
             'debito_total_compra' : request.POST['debito_total_compra'],
             'stop_venda' : request.POST['stop_venda'],
             'alvo_venda': request.POST['alvo_venda']
-        }
+    }
 
         print(type(item_novo_json['data_compra']))
         
@@ -33,34 +33,6 @@ def consultar_carteira(request,pais):
     conteudo = {
         'pais' : pais,
         'carteira' : Arquivos_Class.consultar_carteira(),
-        #'fechamento' : Arquivos_Class.carrega_fechamento_ajustado()
     }
     
     return render (request, 'consultar_carteira.html', context=conteudo)
-
-
-
-
-
-
-'''
-
-def registrar_compra2(request):
-
-    alias = []
-
-    carteira_json = Arquivos_Class.consultar_carteira()
-
-    for item in carteira_json:
-        df = web.DataReader(item['codigo_b3'], data_source='yahoo', start=f'02-20-2020', end='02-20-2021')
-        alias.append(item['alias'])
-        print('==================================')
-        print(df)
-        print('==================================')    
-
-    context = {
-        'alias' : alias
-    }
-
-    return render (request, 'regitar_compra.html', context=context)
-'''

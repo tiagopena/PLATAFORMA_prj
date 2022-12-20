@@ -140,169 +140,44 @@
 
 
 {% block content %}
-
-
-
-<div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <!-- Nomes das colunas -->        
-        <th scope="col">Código</th>
-        <th scope="col">País</th>
-        <th scope="col">Compra</th>
-        <th scope="col">Tempo</th>
-        <th scope="col">Quantidade</th>
-        <th scope="col">Ordem</th>
-        <th scope="col">Débito</th>
-        <th scope="col">Fechamento</th>
-        <th scope="col">Lucro</th>
-        <th scope="col">Stop</th>
-        <th scope="col">Alvo</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if pais == 'total' %}
-        {% for item01 in carteira %}
-        {% fechamento item01.codigo_b3 item01.pais as valor_fechamento %}
-        {% calcula_porcentagem item01.valor_compra valor_fechamento as lucro %}
-        {% formata_data item01.data_compra as data_compra %}
-          {% if item01.pais == 'brasil' %}
-            {% if lucro <= 0 %}
-            <tr class="table-danger">
-              <th scope="row">{{item01.codigo_b3}}</th>
-              <td><font color="green">{{item01.pais|title}}</font></td>
-              <td>{{ data_compra|date:"D d M Y" }}</td>
-              <td>{{data_compra|timesince}}</td>
-              <td>{{item01.quantidade_compra}}</td>
-              <td>R$ {{item01.valor_compra|floatformat:"2g"}}</td>
-              <td>R$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-              <td>R$ {{valor_fechamento}}</td>
-              <td>{{lucro}} %</td>
-              <td>R$ {{item01.stop_venda|floatformat:"2g"}}</td>
-              <td>R$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-            </tr>
-            {% else %}
-            <tr class="table-success">
-              <th scope="row">{{item01.codigo_b3}}</th>
-              <td><font color="green">{{item01.pais|title}}</font></td>
-              <td>{{ data_compra|date:"D d M Y" }}</td>
-              <td>{{data_compra|timesince}}</td>
-              <td>{{item01.quantidade_compra}}</td>
-              <td>R$ {{item01.valor_compra|floatformat:"2g"}}</td>
-              <td>R$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-              <td>R$ {{valor_fechamento}}</td>
-              <td>{{lucro}} %</td>
-              <td>R$ {{item01.stop_venda|floatformat:"2g"}}</td>
-              <td>R$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-            </tr>
-            {% endif %}
-          {% elif item01.pais == 'eua' %}
-            {% if lucro <= 0 %}
-            <tr class="table-danger">
-              <th scope="row">{{item01.codigo_b3}}</th>
-              <td><font color="blue">{{item01.pais|title}}</font></td>
-              <td>{{ data_compra|date:"D d M Y" }}</td>
-              <td>{{data_compra|timesince}}</td>
-              <td>{{item01.quantidade_compra}}</td>
-              <td>U$ {{item01.valor_compra|floatformat:"2g"}}</td>
-              <td>U$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-              <td>U$ {{valor_fechamento}}</td>
-              <td>{{lucro}} %</td>
-              <td>U$ {{item01.stop_venda|floatformat:"2g"}}</td>
-              <td>U$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-            </tr>
-            {% else %}
-            <tr class="table-success">
-              <th scope="row">{{item01.codigo_b3}}</th>
-              <td><font color="blue">{{item01.pais|title}}</font></td>
-              <td>{{ data_compra|date:"D d M Y" }}</td>
-              <td>{{data_compra|timesince}}</td>
-              <td>{{item01.quantidade_compra}}</td>
-              <td>U$ {{item01.valor_compra|floatformat:"2g"}}</td>
-              <td>U$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-              <td>U$ {{valor_fechamento}}</td>
-              <td>{{lucro}} %</td>
-              <td>U$ {{item01.stop_venda|floatformat:"2g"}}</td>
-              <td>U$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-            </tr>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      {% else %}
-        {% for item01 in carteira %}
-          {% fechamento item01.codigo_b3 item01.pais as valor_fechamento%}
-          {% calcula_porcentagem item01.valor_compra valor_fechamento as lucro %}
-          {% formata_data item01.data_compra as data_compra %}
-            {% if item01.pais == pais %}
-              {% if lucro <= 0 %}
-              <tr class="table-danger">
-                <th scope="row">{{item01.codigo_b3}}</th>
-                <td>{{item01.pais|title}}</td>
-                <td>{{ data_compra|date:"D d M Y" }}</td>
-                <td>{{data_compra|timesince}}</td>
-                <td>{{item01.quantidade_compra}}</td>
-                <td>R$ {{item01.valor_compra|floatformat:"2g"}}</td>
-                <td>R$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-                <td>R$ {{valor_fechamento}}</td>
-                <td>{{lucro}} %</td>
-                <td>R$ {{item01.stop_venda|floatformat:"2g"}}</td>
-                <td>R$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-              </tr>
-              {% else %}
-              <tr class="table-success">
-                <th scope="row">{{item01.codigo_b3}}</th>
-                <td>{{item01.pais|title}}</td>
-                <td>{{ data_compra|date:"D d M Y" }}</td>
-                <td>{{data_compra|timesince}}</td>
-                <td>{{item01.quantidade_compra}}</td>
-                <td>R$ {{item01.valor_compra|floatformat:"2g"}}</td>
-                <td>R$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-                <td>R$ {{valor_fechamento}}</td>
-                <td>{{lucro}} %</td>
-                <td>R$ {{item01.stop_venda|floatformat:"2g"}}</td>
-                <td>R$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-              </tr>
-              {% endif %}
-            {% elif item01.pais == pais %}
-              {% if lucro <= 0 %}
-              <tr class="table-danger">
-                <th scope="row">{{item01.codigo_b3}}</th>
-                <td>{{item01.pais|title}}</td>
-                <td>{{ data_compra|date:"D d M Y" }}</td>
-                <td>{{data_compra|timesince}}</td>
-                <td>{{item01.quantidade_compra}}</td>
-                <td>U$ {{item01.valor_compra|floatformat:"2g"}}</td>
-                <td>U$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-                <td>U$ {{valor_fechamento}}</td>
-                <td>{{lucro}} %</td>
-                <td>U$ {{item01.stop_venda|floatformat:"2g"}}</td>
-                <td>U$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-              </tr>
-              {% else %}
-              <tr class="table-success">
-                <th scope="row">{{item01.codigo_b3}}</th>
-                <td>{{item01.pais|title}}</td>
-                <td>{{ data_compra|date:"D d M Y" }}</td>
-                <td>{{data_compra|timesince}}</td>
-                <td>{{item01.quantidade_compra}}</td>
-                <td>U$ {{item01.valor_compra|floatformat:"2g"}}</td>
-                <td>U$ {{item01.debito_total_compra|floatformat:"2g"}}</td>
-                <td>U$ {{valor_fechamento}}</td>
-                <td>{{lucro}} %</td>
-                <td>U$ {{item01.stop_venda|floatformat:"2g"}}</td>
-                <td>U$ {{item01.alvo_venda|floatformat:"2g"}}</td>
-              </tr>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-      
-      {% endif %}
-    </tbody>
-  </table>
+<div class="card">
+  <form action="home_extrato" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="card-header">
+    Extratos dispiniveis
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Escolha o arquivo para enviar</h5>
+    <p class="card-text">Apenas arquivos do tipo CSV. {{extrato}}</p>
+    <div class="mb-3">
+      <label class="form-label" for="customFile">Upload</label>
+      <input type="file" accept=".csv" name="arquivo" class="form-control" id="customFile">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+</div>
+<br>
+<div class="card text-center">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="true" href="#">Active</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled">Disabled</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
-
 {% endblock %}
 
 {% block script %}

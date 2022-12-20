@@ -137,12 +137,15 @@
       </svg>
     {% endblock %}
 
+{% block menu %}
+{% endblock %}
 
 {% block content %}
 <div class="d-flex gap-5 justify-content-center">
     <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-      <li><a class="dropdown-item rounded-2 active" href="{% url 'consultar_carteira' 'brasil' %}">Consultar Carteira</a></li>      
-      <li><a class="dropdown-item rounded-2" href="{% url 'registrar_compra' %}">Registrar Compra</a></li>
+      <li><a class="dropdown-item rounded-2 active" href="{% url 'carteira_app:consultar_carteira' 'total' %}">Consultar Carteira</a></li>
+      <li><a class="dropdown-item rounded-2" href="{% url 'extrato_app:home_extrato' %}">Extrato EUA</a></li>
+      <li><a class="dropdown-item rounded-2" href="{% url 'carteira_app:registrar_compra' %}">Registrar Compra</a></li>
       <li><a class="dropdown-item rounded-2" href="#">Registrar Venda</a></li>
       <li><hr class="dropdown-divider"></li>
       <li><a class="dropdown-item rounded-2" href="#">Separated link</a></li>

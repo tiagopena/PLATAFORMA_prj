@@ -1,6 +1,8 @@
 from django.urls import path
 from carteira_app import views
 
+app_name = 'carteira_app'
+
 
 urlpatterns = [
     path('', views.menu, name='menu'),

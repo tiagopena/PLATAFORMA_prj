@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('carteira_app/', include('carteira_app.urls')),
+    path('extrato_app/', include('extrato_app.urls')),
     path('', RedirectView.as_view(url='/carteira_app')),
 ]
 

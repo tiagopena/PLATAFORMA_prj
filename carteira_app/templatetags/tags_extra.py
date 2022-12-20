@@ -17,20 +17,23 @@ def fechamento(ticker,pais):
 
     if pais == 'brasil':
         for item in (web.DataReader(ticker + '.SA', data_source='yahoo', start=hoje, end=hoje)['Adj Close']):
-            fechamento_ajustado = item
-            print(type(item))
+            fechamento_ajustado = item            
     elif pais == 'eua':
         for item in (web.DataReader(ticker, data_source='yahoo', start=hoje, end=hoje)['Adj Close']):
             fechamento_ajustado = item
             print(type(item))
-    
-    print(type(fechamento_ajustado))
-    print(type(fechamento_ajustado))
-    print(type(fechamento_ajustado))
-    print(type(fechamento_ajustado))
-    print(type(fechamento_ajustado))
-    print(type(fechamento_ajustado))
-    print(type(fechamento_ajustado))
+
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
+    print(fechamento_ajustado)
     print(fechamento_ajustado)
 
         
@@ -38,32 +41,12 @@ def fechamento(ticker,pais):
 
 @register.simple_tag
 def formata_data(data_eua):
-    data_brasil = datetime.strptime(data_eua, '%Y-%m-%d')
-
-    
+    data_brasil = datetime.strptime(data_eua, '%Y-%m-%d')    
 
     return(data_brasil)
-
-#@register.simple_tag
-#def formata_data(data_eua):
-#    ano = data_eua.split('-')[0]
-#    mes = (data_eua.split('-')[1]).split('-')[0]
-#    dia = data_eua.split('-')[2]
-#    data_brasil = dia + '/' + mes + '/' + ano
-#
-#    return(data_brasil)
-
-#@register.simple_tag
-#def converte_valor_float(valor_string):
-#    valor_float = round(float(valor_string),2)    
-#
-#    return(valor_float)
 
 @register.simple_tag
 def calcula_porcentagem(ordem,fechamento):
     resultado = ((float(fechamento) * 100) / float(ordem)) - 100
 
     return(round(resultado,2))
-
-
-    

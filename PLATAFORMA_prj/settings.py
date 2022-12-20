@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'carteira_app.apps.CarteiraAppConfig',
+    'extrato_app.apps.ExtratoAppConfig',
 ]
 
 MIDDLEWARE = [
