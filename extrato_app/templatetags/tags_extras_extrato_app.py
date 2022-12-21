@@ -5,6 +5,13 @@ import os
 
 
 register = template.Library()
+
+
+@register.simple_tag
+def transforma_string_float(valor_string):
+    valor_float = float(valor_string)
+    return(valor_float)
+
 '''
 @register.simple_tag
 def mostrar_extrato():

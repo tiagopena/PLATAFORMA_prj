@@ -1,18 +1,33 @@
 ﻿Data;Hora;Liquidação;Descrição;Valor (U$);Saldo da conta (U$)
-24/07/2020;12:35;27/07/2020;Câmbio Padrão : R$5977.29;1126.83;1126.83
-28/07/2020;14:55;30/07/2020;Compra de 1 AAPL a $ 377;-377.00;749.83
-13/08/2020;11:32;17/08/2020;Compra de 1 ATVI a $ 82.7;-82.70;667.13
-13/08/2020;11:32;17/08/2020;Compra de 4 ATVI a $ 82.7;-330.80;336.33
-14/08/2020;04:07;14/08/2020;Dividendos AAPL. AAPL dividend, $0.82/share;0.82;337.15
-14/08/2020;04:08;14/08/2020;Retenção Impostos sobre Dividendos AAPL. AAPL tax, 30% withheld;-0.25;336.90
-20/08/2020;10:38;24/08/2020;Compra de 1 UNH a $ 313.79;-313.79;23.11
-28/08/2020;16:32;31/08/2020;Câmbio Padrão : R$11954.57;2166.55;2189.66
-03/09/2020;13:43;08/09/2020;Compra de 1 NVDA a $ 523;-523.00;1666.66
-23/09/2020;02:24;23/09/2020;Dividendos UNH. UNH dividend, $1.25/share;1.25;1667.91
-23/09/2020;02:24;23/09/2020;Retenção Impostos sobre Dividendos UNH. UNH tax, 30% withheld;-0.38;1667.53
-13/11/2020;07:45;13/11/2020;Dividendos AAPL. AAPL dividend, $0.205/share;0.82;1668.35
-13/11/2020;07:49;13/11/2020;Retenção Impostos sobre Dividendos AAPL. AAPL tax, 30% withheld;-0.25;1668.10
-16/12/2020;03:57;16/12/2020;Retenção Impostos sobre Dividendos UNH. UNH tax, 30% withheld;-0.38;1667.72
-16/12/2020;03:57;16/12/2020;Dividendos UNH. UNH dividend, $1.25/share;1.25;1668.97
-30/12/2020;04:15;30/12/2020;Dividendos NVDA. NVDA dividend, $0.16/share;0.16;1669.13
-30/12/2020;04:16;30/12/2020;Retenção Impostos sobre Dividendos NVDA. NVDA tax, 30% withheld;-0.05;1669.08
+12/02/2021;02:52;12/02/2021;Dividendos AAPL. AAPL dividend, $0.205/share;0.82;1669.90
+12/02/2021;02:56;12/02/2021;Retenção Impostos sobre Dividendos AAPL. AAPL tax, 30% withheld;-0.25;1669.65
+19/03/2021;11:01;23/03/2021;Compra de 10 NCLH a $ 28.59;-285.90;1383.75
+24/03/2021;01:22;24/03/2021;Dividendos UNH. UNH dividend, $1.25/share;1.25;1385.00
+24/03/2021;01:22;24/03/2021;Retenção Impostos sobre Dividendos UNH. UNH tax, 30% withheld;-0.38;1384.62
+01/04/2021;01:22;01/04/2021;Dividendos NVDA. NVDA dividend, $0.16/share;0.16;1384.78
+01/04/2021;01:23;01/04/2021;Retenção Impostos sobre Dividendos NVDA. NVDA tax, 30% withheld;-0.05;1384.73
+07/05/2021;01:42;07/05/2021;Dividendos ATVI. ATVI dividend, $0.47/share;2.35;1387.08
+07/05/2021;01:42;07/05/2021;Retenção Impostos sobre Dividendos ATVI. ATVI tax, 30% withheld;-0.71;1386.37
+11/05/2021;06:19;11/05/2021;Dividendos . ACCOUNT CONVERSION CASH;1386.37;2772.74
+11/05/2021;07:18;11/05/2021;Retenção Impostos sobre Dividendos . ACCOUNT CONVERSION CASH;-2772.74;NaN
+11/05/2021;11:19;11/05/2021;Estorno Impostos sobre Dividendos;2772.74;2772.74
+11/05/2021;12:00;11/05/2021;US Estorno Dividendos;-1386.37;1386.37
+14/05/2021;04:10;14/05/2021;Dividendos AAPL. APPLE INC;0.88;1387.25
+14/05/2021;04:10;14/05/2021;Retenção Impostos sobre Dividendos AAPL. APPLE INC;-0.26;1386.99
+03/06/2021;11:28;07/06/2021;Compra de 5 DIS a $ 175.83;-879.15;507.84
+30/06/2021;04:08;30/06/2021;Retenção Impostos sobre Dividendos UNH. UNITEDHEALTH GROUP INC;-0.44;507.40
+30/06/2021;04:08;30/06/2021;Dividendos UNH. UNITEDHEALTH GROUP INC;1.45;508.85
+02/07/2021;05:28;02/07/2021;Retenção Impostos sobre Dividendos NVDA. NVIDIA CORP;-0.05;508.80
+02/07/2021;05:28;02/07/2021;Dividendos NVDA. NVIDIA CORP;0.16;508.96
+13/08/2021;03:04;13/08/2021;Retenção Impostos sobre Dividendos AAPL. APPLE INC;-0.26;508.70
+13/08/2021;03:04;13/08/2021;Dividendos AAPL. APPLE INC;0.88;509.58
+22/09/2021;02:04;22/09/2021;Dividendos UNH. UNITEDHEALTH GROUP INC;1.45;511.03
+22/09/2021;02:04;22/09/2021;Retenção Impostos sobre Dividendos UNH. UNITEDHEALTH GROUP INC;-0.44;510.59
+24/09/2021;02:27;24/09/2021;Retenção Impostos sobre Dividendos NVDA. NVIDIA CORP;-0.05;510.54
+24/09/2021;02:27;24/09/2021;Dividendos NVDA. NVIDIA CORP;0.16;510.70
+12/11/2021;05:09;12/11/2021;Retenção Impostos sobre Dividendos AAPL. APPLE INC;-0.26;510.44
+12/11/2021;05:09;12/11/2021;Dividendos AAPL. APPLE INC;0.88;511.32
+15/12/2021;04:35;15/12/2021;Dividendos UNH. UNITEDHEALTH GROUP INC;1.45;512.77
+15/12/2021;04:35;15/12/2021;Retenção Impostos sobre Dividendos UNH. UNITEDHEALTH GROUP INC;-0.44;512.33
+24/12/2021;05:37;27/12/2021;Retenção Impostos sobre Dividendos NVDA. NVIDIA CORP;-0.05;512.28
+24/12/2021;05:37;27/12/2021;Dividendos NVDA. NVIDIA CORP;0.16;512.44

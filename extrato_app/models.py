@@ -18,8 +18,7 @@ class Arquivos_Class(models.Model):
     def upload_arquivo_csv(arquivo):
         #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
         caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
-        with open(caminho_arquivo, 'wb+') as destination:
-            print(os.getcwd())
+        with open(caminho_arquivo_extrato, 'wb+') as destination:
             for chunk in arquivo.chunks():
                 destination.write(chunk)
             destination.close()
@@ -28,24 +27,41 @@ class Arquivos_Class(models.Model):
         #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
         caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
         extrato = []
-        descricao = []
-
+        cabecalho = []
                
         try:
-            with open (caminho_arquivo_extrato, 'r', encoding='utf-8') as arquivo:
+            with open (caminho_arquivo_extrato, 'r', encoding='utf-8-sig') as arquivo:
                 arquivo_csv = csv.reader(arquivo, delimiter=';')
-                cabecalho = csv.DictReader(arquivo, delimiter=';')
-
-                for coluna in cabecalho:
-                    print(coluna)
-                    descricao.append(coluna['Descrição'])
+                tabela = csv.DictReader(arquivo, delimiter=';')
 
                 for i, linha in enumerate(arquivo_csv):
-                    extrato.append(linha)
-
+                    if i == 0:
+                        cabecalho.append(linha)
+                    else:
+                        extrato.append(linha)
+                        
                 arquivo.close()
+                
+                return(cabecalho,extrato)
 
-                return(descricao)
         except (FileNotFoundError):
             return(False)
-            
+
+    def carregar_coluna_especifica(nome_coluna):
+        #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+        caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
+        conteudo_coluna = []
+
+        try:
+            with open (caminho_arquivo_extrato, 'r', encoding='utf-8-sig') as arquivo:
+                tabela = csv.DictReader(arquivo, delimiter=';')
+
+                for coluna in tabela:
+                    conteudo_coluna.append(coluna[nome_coluna])
+
+                arquivo.close()
+                
+                return(conteudo_coluna)
+
+        except (FileNotFoundError):
+            return(False)
