@@ -16,7 +16,8 @@ class Arquivos_Class(models.Model):
             
             
     def upload_arquivo_csv(arquivo):
-        caminho_arquivo = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
+        #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+        caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
         with open(caminho_arquivo, 'wb+') as destination:
             print(os.getcwd())
             for chunk in arquivo.chunks():
@@ -24,7 +25,8 @@ class Arquivos_Class(models.Model):
             destination.close()
 
     def carregar_arquivo_csv():
-        caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+        #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+        caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
         extrato = []
         descricao = []
 

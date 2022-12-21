@@ -1,6 +1,7 @@
 cd Desenvolvimento/
 source plataforma_env/bin/activate
 cd PLATAFORMA_PROJETO/PLATAFORMA_prj/
+sudo git pull origin
 python3 manage.py runserver
 
 cd \Users\tiago\OneDrive\Documentos\Desenvolvimento\PLATAFORMA_prj
@@ -13,5 +14,4 @@ git config --global user.name "tiagopena"
 git add .
 git commit -m ""
 git remote add origin https://github.com/tiagopena/PLATAFORMA_prj.git
-
-git push -u origin master
+git push -u origin mais
