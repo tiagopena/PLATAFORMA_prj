@@ -140,6 +140,7 @@
 
 
 {% block content %}
+{% load tags_extras_extrato_app %}
 <div class="card">
   <form action="home_extrato" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -148,7 +149,7 @@
   </div>
   <div class="card-body">
     <h5 class="card-title">Escolha o arquivo para enviar</h5>
-    <p class="card-text">Apenas arquivos do tipo CSV. {{extrato}}</p>
+    <p class="card-text">Apenas arquivos do tipo CSV.</p>
     <div class="mb-3">
       <label class="form-label" for="customFile">Upload</label>
       <input type="file" accept=".csv" name="arquivo" class="form-control" id="customFile">
@@ -159,6 +160,7 @@
 </div>
 <br>
 <div class="card text-center">
+  
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
@@ -174,7 +176,7 @@
   </div>
   <div class="card-body">
     <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.{{extrato}}</p>
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>
