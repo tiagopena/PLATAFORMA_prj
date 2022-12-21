@@ -12,5 +12,6 @@ git config --global user.name "tiagopena"
 
 git add .
 git commit -m ""
-git remote add origin https://github.com/tiagopena/CUSTO_prj.git
+git remote add origin https://github.com/tiagopena/PLATAFORMA_prj.git
+
 git push -u origin master
