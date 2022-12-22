@@ -8,7 +8,9 @@ def home(request):
     cabecalho = Arquivos_Class.carregar_arquivo_csv()[0]
     extrato = Arquivos_Class.carregar_arquivo_csv()[1]
 
-    print(Arquivos_Class.carregar_coluna_especifica('Hora'))
+    #print(Arquivos_Class.carregar_coluna_especifica('Hora'))
+
+    Arquivos_Class.comparar_arquivos()
 
     
     
