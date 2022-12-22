@@ -71,57 +71,38 @@ class Arquivos_Class(models.Model):
     def comparar_arquivos (arquivo_novo):
         caminho_arquivo_novo = os.getcwd() + '\\extrato_app\\static\\merge.csv'
         caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+        caminho_arquivo_extrato2 = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato2.csv'
         
         if os.path.exists(caminho_arquivo_extrato):
-            arquivo_csv = pd.read_csv(arquivo_novo, delimiter=';')
-            arquivo_extrato = pd.read_csv(caminho_arquivo_extrato, delimiter=';')
+            data_frame_novo = pd.read_csv(arquivo_novo, delimiter=';')
+            data_frame_novo['Data'] = pd.to_datetime(data_frame_novo['Data'], dayfirst=True)
 
-            print('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP')
-            print(type(arquivo_csv))
-            print(type(arquivo_extrato))
-            print('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP')
+            data_frame_extrato = pd.read_csv(caminho_arquivo_extrato, delimiter=';')
+            data_frame_extrato['Data'] = pd.to_datetime(data_frame_extrato['Data'], dayfirst=True)
 
-            print('===================================')
-            for linha in arquivo_csv:
-                print(linha)
-            print('===================================')
-            for linha in arquivo_extrato:
-                print(linha)
-            print('===================================')
+            merge = pd.merge(data_frame_novo, data_frame_extrato, how ='outer' )
+
+            merge.sort_values(by=['Data','Hora'], ascending=True, inplace=True)
+
+            merge.to_csv(caminho_arquivo_extrato, index=False, sep=';')
             
-            
-            merge = pd.merge(arquivo_csv, arquivo_extrato, how ='outer' )
-            
-
-            print(merge)
-
-            x = merge.reindex(axis='columns')
-
-            
-
-            x.to_csv(caminho_arquivo_novo, index_label='Indice', sep=';')
-            x.to_csv(caminho_arquivo_extrato, index_label='Indice', sep=';')
-            #merge.to_csv(caminho_arquivo_novo, index=False, sep=';')
-            #merge.to_csv(caminho_arquivo_extrato, index=False, sep=';')
-            
-
-
-            
-            print('CRIOU ARQUIVO NOVO')
-                
         else:
-            print('CHEGOU AQUI 07')
-
-            temporario = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+            temporario = os.getcwd() + '\\extrato_app\\arquivos_csv\\temporario.csv'
 
             with open(temporario, 'wb+') as destination:
                 for chunk in arquivo_novo.chunks():
                     destination.write(chunk)
                 destination.close()
 
-            x = pd.read_csv(temporario, delimiter=';')
+            data_frame_temporario = pd.read_csv(temporario, delimiter=';')
 
-            x.to_csv(caminho_arquivo_extrato, index_label='Indice', sep=';')
+            data_frame_temporario['Data'] = pd.to_datetime(data_frame_temporario['Data'], dayfirst=True)
+            
+            data_frame_temporario.sort_values(by=['Data','Hora'], ascending=True, inplace=True)
+
+            a = pd.DataFrame(data_frame_temporario)
+            
+            data_frame_temporario.to_csv(caminho_arquivo_extrato, index=False, sep=';')
 
 
 

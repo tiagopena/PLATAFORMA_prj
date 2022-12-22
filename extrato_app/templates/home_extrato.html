@@ -190,24 +190,24 @@
         </thead>
         <tbody>
           {% for item in extrato %}
-          {% transforma_string_float item.5 as valor_float %}
+          {% transforma_string_float item.4 as valor_float %}
           {% if valor_float <= 0 %}
           <tr class="table-danger">
-            <th scope="row">{{item.1}}</th>
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
             <td>{{item.2}}</td>
             <td>{{item.3}}</td>
             <td>{{item.4}}</td>
-            <td>{{item.5}}</td>
-            <td>{{item.6}}</td>            
+            <td>{{item.5}}</td>            
           </tr>
           {% else %}
           <tr class="table-success">
-            <th scope="row">{{item.1}}</th>
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
             <td>{{item.2}}</td>
             <td>{{item.3}}</td>
             <td>{{item.4}}</td>
-            <td>{{item.5}}</td>
-            <td>{{item.6}}</td>            
+            <td>{{item.5}}</td>            
           </tr>
           {% endif %}
           {% endfor %}
