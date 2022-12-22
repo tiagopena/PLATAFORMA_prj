@@ -6,6 +6,8 @@ import os
 
 
 
+
+
 class Arquivos_Class(models.Model):
 #    def criar_extrato(caminho_arquivo_csv):
 #        try:
@@ -66,11 +68,102 @@ class Arquivos_Class(models.Model):
         except (FileNotFoundError):
             return(False)
 
-    def comparar_arquivos ():
-        caminho_arquivo_novo = os.getcwd() + '/extrato_app/static/2022-report-statement-BR.csv'
-        caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
-        linhas_arquivo_novo_csv = []
-        linhas_arquivo_extrato_csv = []
+    def comparar_arquivos (arquivo_novo):
+        caminho_arquivo_novo = os.getcwd() + '\\extrato_app\\static\\merge.csv'
+        caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+        
+        if os.path.exists(caminho_arquivo_extrato):
+            arquivo_csv = pd.read_csv(arquivo_novo, delimiter=';')
+            arquivo_extrato = pd.read_csv(caminho_arquivo_extrato, delimiter=';')
+
+            print('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP')
+            print(type(arquivo_csv))
+            print(type(arquivo_extrato))
+            print('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP')
+
+            print('===================================')
+            for linha in arquivo_csv:
+                print(linha)
+            print('===================================')
+            for linha in arquivo_extrato:
+                print(linha)
+            print('===================================')
+            
+            
+            merge = pd.merge(arquivo_csv, arquivo_extrato, how ='outer' )
+            
+
+            print(merge)
+
+            x = merge.reindex(axis='columns')
+
+            
+
+            x.to_csv(caminho_arquivo_novo, index_label='Indice', sep=';')
+            x.to_csv(caminho_arquivo_extrato, index_label='Indice', sep=';')
+            #merge.to_csv(caminho_arquivo_novo, index=False, sep=';')
+            #merge.to_csv(caminho_arquivo_extrato, index=False, sep=';')
+            
+
+
+            
+            print('CRIOU ARQUIVO NOVO')
+                
+        else:
+            print('CHEGOU AQUI 07')
+
+            temporario = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+
+            with open(temporario, 'wb+') as destination:
+                for chunk in arquivo_novo.chunks():
+                    destination.write(chunk)
+                destination.close()
+
+            x = pd.read_csv(temporario, delimiter=';')
+
+            x.to_csv(caminho_arquivo_extrato, index_label='Indice', sep=';')
+
+
+
+            
+
+            '''
+            with open(caminho_arquivo_extrato, 'wb+') as destination:
+                for chunk in arquivo_novo.chunks():
+                    destination.write(chunk)
+                destination.close()
+            print('nao CRIOU ARQUIVO NOVO')
+            '''
+
+        '''
+        
+        arquivo_csv = pd.read_csv(caminho_arquivo_novo)
+        print('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+        print(arquivo_csv)
+        print('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+
+        
+        arquivo_novo = pd.read_csv(caminho_arquivo_extrato)
+        print('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+        print(arquivo_novo)
+        print('HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH')
+
+        m = pd.merge(arquivo_csv, arquivo_novo, how ='outer' )
+
+        print('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+        print(m)
+        print('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+
+        M = pd.merge(m, arquivo_csv, how ='outer' )
+
+        print('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM')
+        print(M)
+        print('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM')
+
+        '''
+
+
+        '''
 
         try:
             with open (caminho_arquivo_novo, 'r', encoding='utf-8-sig') as arquivo:
@@ -129,3 +222,5 @@ class Arquivos_Class(models.Model):
         #print(linhas_arquivo_novo_csv)
         #print('=============================')
         #print(linhas_arquivo_extrato_csv)
+
+        '''

@@ -140,7 +140,6 @@
 
 
 {% block content %}
-{% load tags_extras_extrato_app %}
 <div class="card">
   <form action="home_extrato" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -159,64 +158,6 @@
 </form>
 </div>
 <br>
-<div class="card text-center">
-  
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="true" href="#">Active</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled">Disabled</a>
-      </li>
-    </ul>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            {% for item in cabecalho.0 %}
-            <!-- Nomes das colunas -->
-            {% if item != 'Indice' %}
-            <th scope="col">{{item}}</th>
-            {% endif %}
-            {% endfor %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in extrato %}
-          {% transforma_string_float item.5 as valor_float %}
-          {% if valor_float <= 0 %}
-          <tr class="table-danger">
-            <th scope="row">{{item.1}}</th>
-            <td>{{item.2}}</td>
-            <td>{{item.3}}</td>
-            <td>{{item.4}}</td>
-            <td>{{item.5}}</td>
-            <td>{{item.6}}</td>            
-          </tr>
-          {% else %}
-          <tr class="table-success">
-            <th scope="row">{{item.1}}</th>
-            <td>{{item.2}}</td>
-            <td>{{item.3}}</td>
-            <td>{{item.4}}</td>
-            <td>{{item.5}}</td>
-            <td>{{item.6}}</td>            
-          </tr>
-          {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-    </p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
 {% endblock %}
 
 {% block script %}
