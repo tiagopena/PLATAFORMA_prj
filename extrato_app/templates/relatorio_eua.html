@@ -146,6 +146,10 @@
     <button class="nav-link active" id="nav-completo-tab" data-bs-toggle="tab" data-bs-target="#nav-completo" type="button" role="tab" aria-controls="nav-completo" aria-selected="true">Completo</button>
     <button class="nav-link" id="nav-dividendos-tab" data-bs-toggle="tab" data-bs-target="#nav-dividendos" type="button" role="tab" aria-controls="nav-dividendos" aria-selected="false">Dividendos</button>
     <button class="nav-link" id="nav-dividendos-imposto-tab" data-bs-toggle="tab" data-bs-target="#nav-dividendos-imposto" type="button" role="tab" aria-controls="nav-dividendos-imposto" aria-selected="false">Imposto sobre dividendos</button>
+    <button class="nav-link" id="nav-compra-tab" data-bs-toggle="tab" data-bs-target="#nav-compra" type="button" role="tab" aria-controls="nav-compra" aria-selected="false">Compra</button>
+    <button class="nav-link" id="nav-venda-tab" data-bs-toggle="tab" data-bs-target="#nav-venda" type="button" role="tab" aria-controls="nav-venda" aria-selected="false">Venda</button>
+    <button class="nav-link" id="nav-cambio-tab" data-bs-toggle="tab" data-bs-target="#nav-cambio" type="button" role="tab" aria-controls="nav-cambio" aria-selected="false">Câmbio</button>
+    <button class="nav-link" id="nav-taxa-tab" data-bs-toggle="tab" data-bs-target="#nav-taxa" type="button" role="tab" aria-controls="nav-taxa" aria-selected="false">Taxa</button>    
     <button class="nav-link" id="nav-sobra-tab" data-bs-toggle="tab" data-bs-target="#nav-sobra" type="button" role="tab" aria-controls="nav-sobra" aria-selected="false">Sobra</button>
   </div>
 </nav>
@@ -240,7 +244,7 @@
             <td></td>
             <td></td>
             <td><strong>TOTAL</strong></td>
-            <td align="right"><strong>U$ {{saldo_debito|floatformat:"2g"}}</strong></td>
+            <td align="right"><strong>U$ {{saldo_dividendo|floatformat:"2g"}}</strong></td>
             <td align="right"></td>            
           </tr>
         </tbody>
@@ -289,7 +293,203 @@
             <td></td>
             <td></td>
             <td><strong>TOTAL</strong></td>
-            <td align="right"><strong>U$ {{saldo_debito|floatformat:"2g"}}</strong></td>
+            <td align="right"><strong>U$ {{Saldo_dividendo_imposto|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-compra" role="tabpanel" aria-labelledby="nav-compra-tab">
+    <p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in compra %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_compra|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-venda" role="tabpanel" aria-labelledby="nav-venda-tab">
+    <p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in venda %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_venda|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-cambio" role="tabpanel" aria-labelledby="nav-cambio-tab">
+    <p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cambio %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_cambio|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-taxa" role="tabpanel" aria-labelledby="nav-taxa-tab">
+    <p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in taxa %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_taxa|floatformat:"2g"}}</strong></td>
             <td align="right"></td>            
           </tr>
         </tbody>
@@ -338,7 +538,7 @@
             <td></td>
             <td></td>
             <td><strong>TOTAL</strong></td>
-            <td align="right"><strong>U$ {{saldo_credito|floatformat:"2g"}}</strong></td>
+            <td align="right"><strong>U$ {{saldo_resto|floatformat:"2g"}}</strong></td>
             <td align="right"></td>            
           </tr>
         </tbody>

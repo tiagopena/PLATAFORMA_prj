@@ -33,10 +33,20 @@ class Arquivos_Class(models.Model):
         credito = []        
         saldo_debito = 0
         saldo_credito = 0
-
         dividendo = []
+        saldo_dividendo = 0
         dividendo_imposto = []
+        Saldo_dividendo_imposto = 0
+        compra = []
+        saldo_compra = 0
+        venda = []
+        saldo_venda = 0
+        cambio = []
+        saldo_cambio = 0
+        taxa = []
+        saldo_taxa = 0
         resto = []
+        saldo_resto = 0        
         
         try:
             with open (caminho_arquivo_extrato, 'r', encoding='utf-8-sig') as arquivo:
@@ -54,13 +64,49 @@ class Arquivos_Class(models.Model):
                             saldo_credito = saldo_credito + float(linha[4]) # Faz a soma
                         if (('Dividendo' or 'dividendo') in linha[3]) and (not ('Imposto' or 'imposto') in linha[3]):
                             dividendo.append(linha)
+                            saldo_dividendo = saldo_dividendo + float(linha[4])
                         elif (('Dividendo' or 'dividendo') in linha[3]) and (('Imposto' or 'imposto') in linha[3]):
                             dividendo_imposto.append(linha)
+                            Saldo_dividendo_imposto = Saldo_dividendo_imposto + float(linha[4])
+                        elif (('Compra' or 'compra') in linha[3]):
+                            compra.append(linha)
+                            saldo_compra = saldo_compra + float(linha[4])
+                        elif (('Venda' or 'venda') in linha[3]):
+                            venda.append(linha)
+                            saldo_venda = saldo_venda + float(linha[4])
+                        elif 'mbio' in linha[3]:
+                            cambio.append(linha)
+                            saldo_cambio = saldo_cambio + float(linha[4])
+                        elif ('Taxa' or 'taxa') in linha[3]:
+                            taxa.append(linha)
+                            saldo_taxa = saldo_taxa + float(linha[4])
                         else:
                             resto.append(linha)
+                            saldo_resto = saldo_resto + float(linha[4])
                             
                 arquivo.close()
-                return(cabecalho,extrato,debito,saldo_debito,credito,saldo_credito,dividendo,dividendo_imposto,resto)
+                return(
+                    cabecalho,
+                    extrato,
+                    debito,
+                    saldo_debito,
+                    credito,
+                    saldo_credito,
+                    dividendo,
+                    saldo_dividendo,
+                    dividendo_imposto,
+                    Saldo_dividendo_imposto,
+                    compra,
+                    saldo_compra,
+                    venda,
+                    saldo_venda,
+                    cambio,
+                    saldo_cambio,
+                    taxa,
+                    saldo_taxa,
+                    resto,
+                    saldo_resto
+                )
         except (FileNotFoundError):
             return(False)
         

@@ -47,8 +47,19 @@ def relatorio_eua(request):
             'saldo_credito' : conteudo_extrato[5],
             'total' : conteudo_extrato[3] + conteudo_extrato[5],
             'dividendo' : conteudo_extrato[6],
-            'dividendo_imposto' : conteudo_extrato[7],
-            'resto' : conteudo_extrato[8],
+            'saldo_dividendo' : conteudo_extrato[7],
+            'dividendo_imposto' : conteudo_extrato[8],
+            'Saldo_dividendo_imposto' : conteudo_extrato[9],
+            'compra' : conteudo_extrato[10],
+            'saldo_compra' : conteudo_extrato[11],
+            'venda' : conteudo_extrato[12],
+            'saldo_venda' : conteudo_extrato[13],
+            'cambio' : conteudo_extrato[14],
+            'saldo_cambio' : conteudo_extrato[15],
+            'taxa' : conteudo_extrato[16],
+            'saldo_taxa' : conteudo_extrato[17],
+            'resto' : conteudo_extrato[18],
+            'saldo_resto' : conteudo_extrato[19],
         }
         return render (request, 'relatorio_eua.html', context=conteudo)
     else:
