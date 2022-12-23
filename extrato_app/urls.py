@@ -5,5 +5,6 @@ app_name = 'extrato_app'
 
 
 urlpatterns = [
-    path('home_extrato', views.home, name='home_extrato'),
-    ]
+    path('extrato_eua', views.extrato_eua, name='extrato_eua'),
+    path('relatorio_eua', views.relatorio_eua, name='relatorio_eua'),    
+]

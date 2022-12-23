@@ -57,6 +57,16 @@
                             </ul>
                           </li>
                           <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Relatórios</a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'extrato_app:extrato_eua' %}">Extrato EUA</a></li>
+                              <li><a class="dropdown-item" href="#">Extrato Brasil</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="{% url 'extrato_app:relatorio_eua' %}">Relatórios EUA</a></li>                              
+                              <li><a class="dropdown-item" href="#">Relatórios Brasil</a></li>
+                            </ul>
+                          </li>
+                          <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Consulta</a>
                             <ul class="dropdown-menu">
                               <li><a class="dropdown-item" href="{% url 'carteira_app:consultar_carteira' 'brasil' %}">Brasil</a></li>

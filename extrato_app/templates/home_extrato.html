@@ -141,42 +141,16 @@
 
 {% block content %}
 {% load tags_extras_extrato_app %}
-<div class="card">
-  <form action="home_extrato" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-  <div class="card-header">
-    Extratos dispiniveis
+<nav>
+  <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-completo-tab" data-bs-toggle="tab" data-bs-target="#nav-completo" type="button" role="tab" aria-controls="nav-completo" aria-selected="true">Completo</button>
+    <button class="nav-link" id="nav-credito-tab" data-bs-toggle="tab" data-bs-target="#nav-credito" type="button" role="tab" aria-controls="nav-credito" aria-selected="false">Débito</button>
+    <button class="nav-link" id="nav-debito-tab" data-bs-toggle="tab" data-bs-target="#nav-debito" type="button" role="tab" aria-controls="nav-debito" aria-selected="false">Crédito</button>
   </div>
-  <div class="card-body">
-    <h5 class="card-title">Escolha o arquivo para enviar</h5>
-    <p class="card-text">Apenas arquivos do tipo CSV.</p>
-    <div class="mb-3">
-      <label class="form-label" for="customFile">Upload</label>
-      <input type="file" accept=".csv" name="arquivo" class="form-control" id="customFile">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-</form>
-</div>
-<br>
-<div class="card text-center">
-  
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="true" href="#">Active</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled">Disabled</a>
-      </li>
-    </ul>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-completo" role="tabpanel" aria-labelledby="nav-completo-tab">
+    <p>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -197,8 +171,8 @@
             <td>{{item.1}}</td>
             <td>{{item.2}}</td>
             <td>{{item.3}}</td>
-            <td>{{item.4}}</td>
-            <td>{{item.5}}</td>            
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
           </tr>
           {% else %}
           <tr class="table-success">
@@ -206,17 +180,153 @@
             <td>{{item.1}}</td>
             <td>{{item.2}}</td>
             <td>{{item.3}}</td>
-            <td>{{item.4}}</td>
-            <td>{{item.5}}</td>            
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
           </tr>
           {% endif %}
           {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>SALDO</strong></td>
+            <td align="right"><strong>U$ {{total|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
         </tbody>
       </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
     </p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+  <div class="tab-pane fade" id="nav-credito" role="tabpanel" aria-labelledby="nav-credito-tab">
+    <p>      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in debito %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_debito|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-debito" role="tabpanel" aria-labelledby="nav-debito-tab">
+    <p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in credito %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_credito|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
   </div>
 </div>
+
+<br>
+<div class="card">
+  <form action="home_extrato" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="card-header">
+    Extratos dispiniveis
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Escolha o arquivo para enviar</h5>
+    <p class="card-text">Apenas arquivos do tipo CSV.</p>
+    <div class="mb-3">
+      <label class="form-label" for="customFile">Upload</label>
+      <input type="file" accept=".csv" name="arquivo" class="form-control" id="customFile">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
 
 {% block script %}

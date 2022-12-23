@@ -17,37 +17,53 @@ class Arquivos_Class(models.Model):
 #            print('Arquivo CSV nao encontrado')
             
             
-    def upload_arquivo_csv(arquivo):
-        #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
-        caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
-        with open(caminho_arquivo_extrato, 'wb+') as destination:
-            for chunk in arquivo.chunks():
-                destination.write(chunk)
-            destination.close()
+    #def upload_arquivo_csv(arquivo):
+    #    #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
+    #    caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
+    #    with open(caminho_arquivo_extrato, 'wb+') as destination:
+    #        for chunk in arquivo.chunks():
+    #            destination.write(chunk)
+    #        destination.close()
 
-    def carregar_arquivo_csv():
-        #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
-        caminho_arquivo_extrato = os.getcwd() + '/extrato_app/arquivos_csv/extrato.csv'
+    
+    def carregar_arquivo_csv(caminho_arquivo_extrato):
         extrato = []
         cabecalho = []
-               
+        debito = []
+        credito = []        
+        saldo_debito = 0
+        saldo_credito = 0
+
+        dividendo = []
+        dividendo_imposto = []
+        resto = []
+        
         try:
             with open (caminho_arquivo_extrato, 'r', encoding='utf-8-sig') as arquivo:
                 arquivo_csv = csv.reader(arquivo, delimiter=';')
-                tabela = csv.DictReader(arquivo, delimiter=';')
-
                 for i, linha in enumerate(arquivo_csv):
                     if i == 0:
                         cabecalho.append(linha)
                     else:
-                        extrato.append(linha)
-                        
+                        extrato.append(linha) # Cria o extrato completo
+                        if float(linha[4]) < 0: # Cria debito e ccredito
+                            debito.append(linha) # Cria apenas o debito
+                            saldo_debito = saldo_debito + float(linha[4]) # Faz a soma
+                        else:
+                            credito.append(linha) # Cria apenas o credito
+                            saldo_credito = saldo_credito + float(linha[4]) # Faz a soma
+                        if (('Dividendo' or 'dividendo') in linha[3]) and (not ('Imposto' or 'imposto') in linha[3]):
+                            dividendo.append(linha)
+                        elif (('Dividendo' or 'dividendo') in linha[3]) and (('Imposto' or 'imposto') in linha[3]):
+                            dividendo_imposto.append(linha)
+                        else:
+                            resto.append(linha)
+                            
                 arquivo.close()
-                
-                return(cabecalho,extrato)
-
+                return(cabecalho,extrato,debito,saldo_debito,credito,saldo_credito,dividendo,dividendo_imposto,resto)
         except (FileNotFoundError):
             return(False)
+        
 
     def carregar_coluna_especifica(nome_coluna):
         #caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
@@ -68,10 +84,7 @@ class Arquivos_Class(models.Model):
         except (FileNotFoundError):
             return(False)
 
-    def comparar_arquivos (arquivo_novo):
-        caminho_arquivo_novo = os.getcwd() + '\\extrato_app\\static\\merge.csv'
-        caminho_arquivo_extrato = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato.csv'
-        caminho_arquivo_extrato2 = os.getcwd() + '\\extrato_app\\arquivos_csv\\extrato2.csv'
+    def comparar_arquivos (arquivo_novo,caminho_arquivo_extrato):
         
         if os.path.exists(caminho_arquivo_extrato):
             data_frame_novo = pd.read_csv(arquivo_novo, delimiter=';')
@@ -81,28 +94,20 @@ class Arquivos_Class(models.Model):
             data_frame_extrato['Data'] = pd.to_datetime(data_frame_extrato['Data'], dayfirst=True)
 
             merge = pd.merge(data_frame_novo, data_frame_extrato, how ='outer' )
-
             merge.sort_values(by=['Data','Hora'], ascending=True, inplace=True)
-
             merge.to_csv(caminho_arquivo_extrato, index=False, sep=';')
             
         else:
             temporario = os.getcwd() + '\\extrato_app\\arquivos_csv\\temporario.csv'
-
             with open(temporario, 'wb+') as destination:
                 for chunk in arquivo_novo.chunks():
                     destination.write(chunk)
                 destination.close()
-
-            data_frame_temporario = pd.read_csv(temporario, delimiter=';')
-
-            data_frame_temporario['Data'] = pd.to_datetime(data_frame_temporario['Data'], dayfirst=True)
+            data_frame_temporario_extrato = pd.read_csv(temporario, delimiter=';')
+            data_frame_temporario_extrato['Data'] = pd.to_datetime(data_frame_temporario_extrato['Data'], dayfirst=True)            
+            data_frame_temporario_extrato.sort_values(by=['Data','Hora'], ascending=True, inplace=True)
             
-            data_frame_temporario.sort_values(by=['Data','Hora'], ascending=True, inplace=True)
-
-            a = pd.DataFrame(data_frame_temporario)
-            
-            data_frame_temporario.to_csv(caminho_arquivo_extrato, index=False, sep=';')
+            data_frame_temporario_extrato.to_csv(caminho_arquivo_extrato, index=False, sep=';')
 
 
 

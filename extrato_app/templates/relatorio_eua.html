@@ -1,7 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% load tags_extra %}
+
 {% block canonical %}
-<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dropdowns/">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/navbars/">
 {% endblock %}
 
 {% block style %}
@@ -58,7 +60,6 @@
     }
   </style>
 {% endblock %}
-
 
 
 {% block svn %}
@@ -137,20 +138,245 @@
       </svg>
     {% endblock %}
 
-{% block menu %}
-{% endblock %}
 
 {% block content %}
-<div class="d-flex gap-5 justify-content-center">
-    <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-      <li><a class="dropdown-item rounded-2 active" href="{% url 'carteira_app:consultar_carteira' 'total' %}">Consultar Carteira</a></li>
-      <li><a class="dropdown-item rounded-2" href="{% url 'extrato_app:extrato_eua' %}">Extrato EUA</a></li>
-      <li><a class="dropdown-item rounded-2" href="{% url 'carteira_app:registrar_compra' %}">Registrar Compra</a></li>
-      <li><a class="dropdown-item rounded-2" href="#">Registrar Venda</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item rounded-2" href="#">Separated link</a></li>
-    </ul>    
+{% load tags_extras_extrato_app %}
+<nav>
+  <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-completo-tab" data-bs-toggle="tab" data-bs-target="#nav-completo" type="button" role="tab" aria-controls="nav-completo" aria-selected="true">Completo</button>
+    <button class="nav-link" id="nav-dividendos-tab" data-bs-toggle="tab" data-bs-target="#nav-dividendos" type="button" role="tab" aria-controls="nav-dividendos" aria-selected="false">Dividendos</button>
+    <button class="nav-link" id="nav-dividendos-imposto-tab" data-bs-toggle="tab" data-bs-target="#nav-dividendos-imposto" type="button" role="tab" aria-controls="nav-dividendos-imposto" aria-selected="false">Imposto sobre dividendos</button>
+    <button class="nav-link" id="nav-sobra-tab" data-bs-toggle="tab" data-bs-target="#nav-sobra" type="button" role="tab" aria-controls="nav-sobra" aria-selected="false">Sobra</button>
   </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-completo" role="tabpanel" aria-labelledby="nav-completo-tab">
+    <p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in extrato %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>SALDO</strong></td>
+            <td align="right"><strong>U$ {{total|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-dividendos" role="tabpanel" aria-labelledby="nav-dividendos-tab">
+    <p>      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in dividendo %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_debito|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-dividendos-imposto" role="tabpanel" aria-labelledby="nav-dividendos-imposto-tab">
+    <p>      
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in dividendo_imposto %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_debito|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+  <div class="tab-pane fade" id="nav-sobra" role="tabpanel" aria-labelledby="nav-sobra-tab">
+    <p>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            {% for item in cabecalho.0 %}
+            <!-- Nomes das colunas -->
+            {% if item != 'Indice' %}
+            <th scope="col">{{item}}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in resto %}
+          {% transforma_string_float item.4 as valor_float %}
+          {% if valor_float <= 0 %}
+          <tr class="table-danger">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% else %}
+          <tr class="table-success">
+            <th scope="row">{{item.0}}</th>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td align="right">{{item.4|floatformat:"2g"}}</td>
+            <td align="right">{{item.5|floatformat:"2g"}}</td>            
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr class="table-light">
+            <th scope="row">Hoje</th>
+            <td></td>
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td align="right"><strong>U$ {{saldo_credito|floatformat:"2g"}}</strong></td>
+            <td align="right"></td>            
+          </tr>
+        </tbody>
+      </table>
+      <strong>Crédito:</strong> U$ {{saldo_credito|floatformat:"2g"}}, <strong>Débito:</strong> U$ {{saldo_debito|floatformat:"2g"}}, <strong>Saldo em conta:</strong> U$ {{total|floatformat:"2g"}}
+    </p>
+  </div>
+</div>
+
+<br>
+<div class="card">
+  <form action="home_extrato" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="card-header">
+    Extratos dispiniveis
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Escolha o arquivo para enviar</h5>
+    <p class="card-text">Apenas arquivos do tipo CSV.</p>
+    <div class="mb-3">
+      <label class="form-label" for="customFile">Upload</label>
+      <input type="file" accept=".csv" name="arquivo" class="form-control" id="customFile">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
 {% endblock %}
 
 {% block script %}
