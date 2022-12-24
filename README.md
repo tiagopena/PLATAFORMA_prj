@@ -4,7 +4,10 @@ cd PLATAFORMA_PROJETO/PLATAFORMA_prj/
 sudo git pull origin
 python3 manage.py runserver
 
-cd \Users\tiago\OneDrive\Documentos\Desenvolvimento\PLATAFORMA_prj
+WINDOWS
+cd \Users\tiago\OneDrive\Documentos\Desenvolvimento\
+.\smartweb_env\Scripts\activate
+cd PLATAFORMA_prj
 python manage.py runserver
 
 
