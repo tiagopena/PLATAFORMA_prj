@@ -2,6 +2,8 @@ from django import template
 from pandas_datareader import data as web
 from datetime import date,timedelta,datetime
 from django.template.defaultfilters import stringfilter
+import requests
+import json
 
 register = template.Library()
 
@@ -16,28 +18,24 @@ def fechamento(ticker,pais):
         hoje =  hoje + timedelta(days=-1)
 
     if pais == 'brasil':
-        for item in (web.DataReader(ticker + '.SA', data_source='yahoo', start=hoje, end=hoje)['Adj Close']):
-            fechamento_ajustado = item            
-    elif pais == 'eua':
-        for item in (web.DataReader(ticker, data_source='yahoo', start=hoje, end=hoje)['Adj Close']):
-            fechamento_ajustado = item
-            print(type(item))
-
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-    print(fechamento_ajustado)
-
+        print('Entrou no ' + pais + ' com o ticker ' + ticker)
+        url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '.SAO' + '&apikey=CX9G8JJCF9WDPS9N'
+        resposta = requests.get(url)
+        preco = resposta.json()
+        fechamento_ajustado = preco['Global Quote']['05. price']
+        print(fechamento_ajustado)
         
-    return round(float(fechamento_ajustado),2)
+    elif pais == 'eua':
+        print('Entrou no ' + pais + ' com o ticker ' + ticker)
+        url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '&apikey=CX9G8JJCF9WDPS9N'
+        resposta = requests.get(url)
+        preco = resposta.json()
+        #for item in (web.DataReader(ticker, data_source='yahoo', start=hoje, end=hoje)['Adj Close']):
+        #    fechamento_ajustado = item
+        #    print(type(item))
+        fechamento_ajustado = preco['Global Quote']['05. price']
+        print(fechamento_ajustado)
+    return (float(fechamento_ajustado))
 
 @register.simple_tag
 def formata_data(data_eua):

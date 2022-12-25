@@ -34,5 +34,7 @@ def consultar_carteira(request,pais):
         'pais' : pais,
         'carteira' : Arquivos_Class.consultar_carteira(),
     }
+
+    #Arquivos_Class.api()
     
     return render (request, 'consultar_carteira.html', context=conteudo)

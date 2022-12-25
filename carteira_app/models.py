@@ -3,6 +3,7 @@ from pandas_datareader import data as cotacao
 import json
 import os
 from datetime import date as dt
+import requests
 
 
 class Arquivos_Class(models.Model):
@@ -27,3 +28,19 @@ class Arquivos_Class(models.Model):
         item_json = Arquivos_Class.consultar_carteira()
         item_json.append(item_novo_json)
         Arquivos_Class.cria_carteira(item_json)
+
+    def api ():
+        
+        url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=PETR4.SAO&apikey=CX9G8JJCF9WDPS9N'
+        resposta = requests.get(url)
+        preco = resposta.json()
+
+
+        print('=================================================')
+
+
+
+
+
+        print(preco['Global Quote']['05. price'])
+        print('=================================================')
