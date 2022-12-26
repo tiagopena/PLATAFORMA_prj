@@ -1,7 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% load tags_extra %}
+
 {% block canonical %}
-<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dropdowns/">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/navbars/">
 {% endblock %}
 
 {% block style %}
@@ -58,7 +60,6 @@
     }
   </style>
 {% endblock %}
-
 
 
 {% block svn %}
@@ -137,22 +138,87 @@
       </svg>
     {% endblock %}
 
-{% block menu %}
-{% endblock %}
 
 {% block content %}
-<div class="d-flex gap-5 justify-content-center">
-    <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px">
-      <li><a class="dropdown-item rounded-2 active" href="{% url 'carteira_app:consultar_carteira' 'total' %}">Consultar Carteira</a></li>
-      <li><a class="dropdown-item rounded-2" href="{% url 'extrato_app:extrato_eua' %}">Extrato EUA</a></li>
-      <li><a class="dropdown-item rounded-2" href="{% url 'carteira_app:registrar_compra' %}">Registrar Compra</a></li>
-      <li><a class="dropdown-item rounded-2" href="#">Registrar Venda</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item rounded-2" href="#">Separated link</a></li>
-    </ul>    
+
+
+
+<div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Nomes das colunas -->        
+        <th scope="col">Código</th>
+        <th scope="col">País</th>
+        <th scope="col">Compra</th>
+        <th scope="col">Tempo</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Ordem</th>
+        <th scope="col">Débito</th>
+        <th scope="col">Fechamento</th>
+        <th scope="col">Lucro</th>
+        <th scope="col">Stop</th>
+        <th scope="col">Alvo</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      {{carteira}}
+      {% if pais == 'total' %}
+        {% for item in carteira %}
+
+        {% endfor %}
+      {% elif pais == 'brasil' %}
+        {% for item in carteira %}
+          {% if item.pais == pais %}
+          <tr class="table-danger">
+            <th scope="row">{{item.codigo_b3}}</th>
+            <td><font color="green">{{item.pais|title}}</font></td>
+            <td>{{ data_compra|date:"D d M Y" }}</td>
+            <td>{{data_compra|timesince}}</td>
+            <td>{{item.quantidade_compra}}</td>
+            <td>R$ {{item.valor_compra|floatformat:"2g"}}</td>
+            <td>R$ {{item.debito_total_compra|floatformat:"2g"}}</td>
+            <td id="demo"> <button onclick="myFunction()">Click me</button> </td>
+            <td>{{lucro}} %</td>
+            <td>R$ {{item.stop_venda|floatformat:"2g"}}</td>
+            <td>R$ {{item.alvo_venda|floatformat:"2g"}}</td>
+          </tr>          
+          {% endif%}
+        {% endfor %}
+      {% elif pais == 'eua' %}
+        {% for item in carteira %}
+          {% if item.pais == pais %}
+          <tr class="table-danger">
+            <th scope="row">{{item.codigo_b3}}</th>
+            <td><font color="green">{{item.pais|title}}</font></td>
+            <td>{{ data_compra|date:"D d M Y" }}</td>
+            <td>{{data_compra|timesince}}</td>
+            <td>{{item.quantidade_compra}}</td>
+            <td>U$ {{item.valor_compra|floatformat:"2g"}}</td>
+            <td>U$ {{item.debito_total_compra|floatformat:"2g"}}</td>
+            <td>U$ </td>
+            <td>{{lucro}} %</td>
+            <td>U$ {{item.stop_venda|floatformat:"2g"}}</td>
+            <td>U$ {{item.alvo_venda|floatformat:"2g"}}</td>
+          </tr>          
+          {% endif%}
+        {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
   </div>
+</div>
+
 {% endblock %}
 
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script>
+  function myFunction() {
+    document.getElementById("demo").innerHTML = "Hello World";
+  }
+  </script>
+  
 {% endblock %}

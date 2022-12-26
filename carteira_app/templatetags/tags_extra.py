@@ -18,23 +18,25 @@ def fechamento(ticker,pais):
         hoje =  hoje + timedelta(days=-1)
 
     if pais == 'brasil':
-        print('Entrou no ' + pais + ' com o ticker ' + ticker)
         url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '.SAO' + '&apikey=CX9G8JJCF9WDPS9N'
         resposta = requests.get(url)
         preco = resposta.json()
-        fechamento_ajustado = preco['Global Quote']['05. price']
-        print(fechamento_ajustado)
-        
+        if resposta and ('Global Quote' in preco):
+            fechamento_ajustado = preco['Global Quote']['05. price']
+        else:
+            fechamento_ajustado = 0
+            print(preco['Note'])
     elif pais == 'eua':
         print('Entrou no ' + pais + ' com o ticker ' + ticker)
         url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '&apikey=CX9G8JJCF9WDPS9N'
         resposta = requests.get(url)
         preco = resposta.json()
-        #for item in (web.DataReader(ticker, data_source='yahoo', start=hoje, end=hoje)['Adj Close']):
-        #    fechamento_ajustado = item
-        #    print(type(item))
-        fechamento_ajustado = preco['Global Quote']['05. price']
-        print(fechamento_ajustado)
+        if resposta and ('Global Quote' in preco):
+            fechamento_ajustado = preco['Global Quote']['05. price']
+        else:
+            fechamento_ajustado = 0
+            print(preco['Note'])
+
     return (float(fechamento_ajustado))
 
 @register.simple_tag
