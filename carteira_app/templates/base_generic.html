@@ -104,17 +104,26 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Carteira</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Completa</a></li>
-            <li><a class="dropdown-item" href="#">Brasil</a></li>
-            <li><a class="dropdown-item" href="#">Eua</a></li>
+            <li><a class="dropdown-item" href="{% url 'carteira_app:consultar_carteira' 'total' %}">Completa</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'carteira_app:consultar_carteira' 'brasil' %}">Brasil</a></li>
+            <li><a class="dropdown-item" href="{% url 'carteira_app:consultar_carteira' 'eua' %}">Eua</a></li>
           </ul>
         </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Negociação</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Compe</a></li>
+            <li><a class="dropdown-item" href="{% url 'carteira_app:registrar_compra' %}">Compra</a></li>
             <li><a class="dropdown-item" href="#">Venda</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Extratos</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Brasil</a></li>
+            <li><a class="dropdown-item" href="{% url 'extrato_app:extrato_eua' %}">Eua</a></li>
           </ul>
         </li>
 
@@ -122,7 +131,7 @@
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Relatórios</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Brasil</a></li>
-            <li><a class="dropdown-item" href="#">Eua</a></li>
+            <li><a class="dropdown-item" href="{% url 'extrato_app:relatorio_eua' %}">Eua</a></li>
           </ul>
         </li>
 
