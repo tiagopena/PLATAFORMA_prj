@@ -10,43 +10,43 @@
 <div class="bd-example-snippet bd-code-snippet table-responsive">
   <table class="table table-hover">
     <thead>
-      <tr align="center">
+      <tr align="right">
         <!-- Nomes das colunas -->        
-        <th scope="col">Código</th>
-        <th scope="col">País</th>
-        <th scope="col">Compra</th>
-        <th scope="col">Tempo</th>
-        <th scope="col">Quantidade</th>
-        <th scope="col">Ordem</th>
-        <th scope="col">Fechamento</th>
-        <th scope="col">Lucro</th>
-        <th scope="col">Débito</th>        
-        <th scope="col">Stop</th>
-        <th scope="col">Alvo</th>
+        <th scope="col">Código</th><!-- Codigo -->
+        <th scope="col">País</th><!-- Pais -->
+        <th scope="col">Compra</th><!-- Compra -->
+        <th scope="col">Tempo</th><!-- Tempo -->
+        <th scope="col" align="right">Quantidade</th><!-- Quantidade -->
+        <th scope="col" align="right">Ordem</th><!-- Ordem -->
+        <th scope="col" align="right">Fechamento</th><!-- Fechamento -->
+        <th scope="col" align="right">Lucro</th><!-- Lucro -->
+        <th scope="col" align="right">Débito</th><!-- Debito -->
+        <th scope="col" align="right">Stop</th><!-- Stop -->
+        <th scope="col" align="right">Alvo</th><!-- Alvo -->
       </tr>
     </thead>
     <tbody>
       
       
       {% if pais == 'total' %}
-        {% for item in carteira %}
+        {% for item in carteira.acao %}
         {% formata_data item.data_compra as data_compra %}
-        {% fechamento item.codigo_b3 item.pais as fechamento %}
-        {% calcula_porcentagem item.valor_compra fechamento as lucro %}
-          {% if lucro < 0 and fechamento != 0 %}
-              <tr class="table-danger">
+        {% formata_data item.fechamento_data as fechamento_data %}
+        {% calcula_porcentagem item.valor_compra item.fechamento_valor as lucro %}
+          {% if lucro < 0 %}
+              <tr align="right" class="table-danger">
                   {% if item.pais == 'brasil' %}            
-                      <th scope="row">{{item.codigo_b3}}</th>
-                      <td><font color="blue">{{item.pais|title}}</font></td>
-                      <td>{{ data_compra|date:"D d M Y" }}</td>
-                      <td>{{data_compra|timesince}}</td>
-                      <td align="right">{{item.quantidade_compra}}</td>
-                      <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                      <td align="right">R$ {{fechamento|floatformat:"2g"}}</td>
-                      <td align="right"><font color="red"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
-                      <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
-                      <td align="right">R$ {{item.stop_venda|floatformat:"2g"}}</td>
-                      <td align="right">R$ {{item.alvo_venda|floatformat:"2g"}}</td>
+                      <th align="right" scope="row">{{item.codigo_b3}}</th><!-- Codigo -->
+                      <td align="right"><font color="blue">{{item.pais|title}}</font></td><!-- Pais -->
+                      <td align="right">{{ data_compra|date:"D d M Y" }}</td><!-- Compra -->
+                      <td align="right">{{data_compra|timesince}}</td><!-- Tempo -->
+                      <td align="right">{{item.quantidade_compra}}</td><!-- Quantidade -->
+                      <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td><!-- Ordem -->
+                      <td align="right">R$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
+                      <td align="right"><font color="red"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td><!-- Lucro -->
+                      <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td><!-- Debito -->
+                      <td align="right">R$ {{item.stop_venda|floatformat:"2g"}}</td><!-- Stop -->
+                      <td align="right">R$ {{item.alvo_venda|floatformat:"2g"}}</td><!-- Alvo -->
                       
                   {% elif item.pais == 'eua' %}            
                       <th scope="row">{{item.codigo_b3}}</th>
@@ -55,15 +55,15 @@
                       <td>{{data_compra|timesince}}</td>
                       <td align="right">{{item.quantidade_compra}}</td>
                       <td align="right"><strong>U$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                      <td align="right">U$ {{fechamento|floatformat:"2g"}}</td>
+                      <td align="right">U$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                       <td align="right"><font color="red"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                       <td align="right">U$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                       <td align="right">U$ {{item.stop_venda|floatformat:"2g"}}</td>
                       <td align="right">U$ {{item.alvo_venda|floatformat:"2g"}}</td>            
                   {% endif%}
               </tr>
-          {% elif lucro > 0  and fechamento != 0 %}
-              <tr class="table-success">
+          {% elif lucro > 0  %}
+              <tr align="right" class="table-success">
                   {% if item.pais == 'brasil' %}            
                   <th scope="row">{{item.codigo_b3}}</th>
                   <td><font color="blue">{{item.pais|title}}</font></td>
@@ -71,7 +71,7 @@
                   <td>{{data_compra|timesince}}</td>
                   <td align="right">{{item.quantidade_compra}}</td>
                   <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                  <td align="right">R$ {{fechamento|floatformat:"2g"}}</td>
+                  <td align="right">R$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                   <td align="right"><font color="green"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                   <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                   <td align="right">R$ {{item.stop_venda|floatformat:"2g"}}</td>
@@ -84,7 +84,7 @@
                   <td>{{data_compra|timesince}}</td>
                   <td align="right">{{item.quantidade_compra}}</td>
                   <td align="right"><strong>U$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                  <td align="right">U$ {{fechamento|floatformat:"2g"}}</td>
+                  <td align="right">U$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                   <td align="right"><font color="green"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                   <td align="right">U$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                   <td align="right">U$ {{item.stop_venda|floatformat:"2g"}}</td>
@@ -92,7 +92,7 @@
                   {% endif%}
               </tr>
           {% else %}
-              <tr class="table-secondary">
+              <tr align="right" class="table-secondary">
                   {% if item.pais == 'brasil' %}            
                       <th scope="row">{{item.codigo_b3}}</th>
                       <td><font color="blue">{{item.pais|title}}</font></td>
@@ -100,7 +100,7 @@
                       <td>{{data_compra|timesince}}</td>
                       <td align="right">{{item.quantidade_compra}}</td>
                       <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                      <td align="right">R$ {{fechamento|floatformat:"2g"}}</td>
+                      <td align="right">R$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                       <td align="right">0 %</td>
                       <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                       <td align="right">R$ {{item.stop_venda|floatformat:"2g"}}</td>
@@ -113,7 +113,7 @@
                       <td>{{data_compra|timesince}}</td>
                       <td align="right">{{item.quantidade_compra}}</td>
                       <td align="right"><strong>U$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                      <td align="right">U$ {{fechamento|floatformat:"2g"}}</td>
+                      <td align="right">U$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                       <td align="right">0 %</td>
                       <td align="right">U$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                       <td align="right">U$ {{item.stop_venda|floatformat:"2g"}}</td>
@@ -123,12 +123,12 @@
           {% endif %}
         {% endfor %}
       {% elif pais == 'brasil' %}
-        {% for item in carteira %}
+        {% for item in carteira.acao %}
         {% formata_data item.data_compra as data_compra %}
-        {% fechamento item.codigo_b3 item.pais as fechamento %}
-        {% calcula_porcentagem item.valor_compra fechamento as lucro %}
-          {% if lucro < 0 and fechamento != 0 %}
-            <tr class="table-danger">          
+        {% formata_data item.fechamento_data as fechamento_data %}
+        {% calcula_porcentagem item.valor_compra item.fechamento_valor as lucro %}
+          {% if lucro < 0 %}
+            <tr align="right" class="table-danger">          
               {% if item.pais == pais %}
                 <th scope="row">{{item.codigo_b3}}</th>
                 <td><font color="blue">{{item.pais|title}}</font></td>
@@ -136,15 +136,15 @@
                 <td>{{data_compra|timesince}}</td>
                 <td align="right">{{item.quantidade_compra}}</td>
                 <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                <td align="right">R$ {{fechamento|floatformat:"2g"}}</td>
+                <td align="right">R$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                 <td align="right"><font color="red"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                 <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                 <td align="right">R$ {{item.stop_venda|floatformat:"2g"}}</td>
                 <td align="right">R$ {{item.alvo_venda|floatformat:"2g"}}</td>
               {% endif %}
             </tr>
-          {% elif lucro > 0 and fechamento != 0 %}
-            <tr class="table-success">          
+          {% elif lucro > 0 %}
+            <tr align="right" class="table-success">          
               {% if item.pais == pais %}
                 <th scope="row">{{item.codigo_b3}}</th>
                 <td><font color="blue">{{item.pais|title}}</font></td>
@@ -152,7 +152,7 @@
                 <td>{{data_compra|timesince}}</td>
                 <td align="right">{{item.quantidade_compra}}</td>
                 <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                <td align="right">R$ {{fechamento|floatformat:"2g"}}</td>
+                <td align="right">R$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                 <td align="right"><font color="green"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                 <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                 <td align="right">R$ {{item.stop_venda|floatformat:"2g"}}</td>
@@ -160,7 +160,7 @@
               {% endif %}
             </tr>
           {% else %}
-            <tr class="table-secondary">          
+            <tr align="right" class="table-secondary">          
               {% if item.pais == pais %}
                 <th scope="row">{{item.codigo_b3}}</th>
                 <td><font color="blue">{{item.pais|title}}</font></td>
@@ -168,7 +168,7 @@
                 <td>{{data_compra|timesince}}</td>
                 <td align="right">{{item.quantidade_compra}}</td>
                 <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                <td align="right">R$ {{fechamento|floatformat:"2g"}}</td>
+                <td align="right">R$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                 <td align="right">0 %</td>
                 <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                 <td align="right">R$ {{item.stop_venda|floatformat:"2g"}}</td>
@@ -178,12 +178,12 @@
           {% endif %}
         {% endfor %}
       {% elif pais == 'eua' %}
-        {% for item in carteira %}
+        {% for item in carteira.acao %}
         {% formata_data item.data_compra as data_compra %}
-        {% fechamento item.codigo_b3 item.pais as fechamento %}
-        {% calcula_porcentagem item.valor_compra fechamento as lucro %}
-          {% if lucro < 0 and fechamento != 0 %}
-            <tr class="table-danger">          
+        {% formata_data item.fechamento_data as fechamento_data %}
+        {% calcula_porcentagem item.valor_compra item.fechamento_valor as lucro %}
+          {% if lucro < 0 %}
+            <tr align="right" class="table-danger">          
               {% if item.pais == pais %}
                 <th scope="row">{{item.codigo_b3}}</th>
                 <td><font color="green">{{item.pais|title}}</font></td>
@@ -191,15 +191,15 @@
                 <td>{{data_compra|timesince}}</td>
                 <td align="right">{{item.quantidade_compra}}</td>
                 <td align="right"><strong>U$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                <td align="right">U$ {{fechamento|floatformat:"2g"}}</td>
+                <td align="right">U$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                 <td align="right"><font color="red"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                 <td align="right">U$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                 <td align="right">U$ {{item.stop_venda|floatformat:"2g"}}</td>
                 <td align="right">U$ {{item.alvo_venda|floatformat:"2g"}}</td>
               {% endif %}
             </tr>
-          {% elif lucro > 0 and fechamento != 0 %}
-            <tr class="table-success">
+          {% elif lucro > 0 %}
+            <tr align="right" class="table-success">
               {% if item.pais == pais %}
                 <th scope="row">{{item.codigo_b3}}</th>
                 <td><font color="green">{{item.pais|title}}</font></td>
@@ -207,7 +207,7 @@
                 <td>{{data_compra|timesince}}</td>
                 <td align="right">{{item.quantidade_compra}}</td>
                 <td align="right"><strong>U$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                <td align="right">U$ {{fechamento|floatformat:"2g"}}</td>
+                <td align="right">U$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                 <td align="right"><font color="green"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                 <td align="right">U$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                 <td align="right">U$ {{item.stop_venda|floatformat:"2g"}}</td>
@@ -215,7 +215,7 @@
               {% endif %}
             </tr>
           {% else %}
-            <tr class="table-secondary">          
+            <tr align="right" class="table-secondary">          
               {% if item.pais == pais %}
                 <th scope="row">{{item.codigo_b3}}</th>
                 <td><font color="green">{{item.pais|title}}</font></td>
@@ -223,7 +223,7 @@
                 <td>{{data_compra|timesince}}</td>
                 <td align="right">{{item.quantidade_compra}}</td>
                 <td align="right"><strong>U$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
-                <td align="right">U$ {{fechamento|floatformat:"2g"}}</td>
+                <td align="right">U$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                 <td align="right">0 %</td>
                 <td align="right">U$ {{item.debito_total_compra|floatformat:"2g"}}</td>                
                 <td align="right">U$ {{item.stop_venda|floatformat:"2g"}}</td>

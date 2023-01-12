@@ -50,3 +50,13 @@ def calcula_porcentagem(ordem,fechamento):
     resultado = ((float(fechamento) * 100) / float(ordem)) - 100
 
     return(round(resultado,2))
+
+@register.simple_tag
+def calcula_preco_medio(ticker,valor_compra,carteira):
+    quantidade = 0
+    preco_medio = 0
+    valor_total = 0
+    for acao in carteira['acao']:
+        if acao['codigo_b3'] == ticker and acao['valor_compra'] != valor_compra:
+            quantidade = quantidade + acao['quantidade_compra']
+            valor_total = valor_total + (acao['valor_compra'] * acao['quantidade_compra'])
