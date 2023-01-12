@@ -18,6 +18,7 @@
         <th scope="col">Tempo</th><!-- Tempo -->
         <th scope="col" align="right">Quantidade</th><!-- Quantidade -->
         <th scope="col" align="right">Ordem</th><!-- Ordem -->
+        <th scope="col" align="right">P. Médio</th><!-- Preco Medio -->
         <th scope="col" align="right">Fechamento</th><!-- Fechamento -->
         <th scope="col" align="right">Lucro</th><!-- Lucro -->
         <th scope="col" align="right">Débito</th><!-- Debito -->
@@ -33,6 +34,7 @@
         {% formata_data item.data_compra as data_compra %}
         {% formata_data item.fechamento_data as fechamento_data %}
         {% calcula_porcentagem item.valor_compra item.fechamento_valor as lucro %}
+        {% calcula_preco_medio item.codigo_b3 item.valor_compra carteira.acao as preco_medio %}
           {% if lucro < 0 %}
               <tr align="right" class="table-danger">
                   {% if item.pais == 'brasil' %}            
@@ -42,6 +44,7 @@
                       <td align="right">{{data_compra|timesince}}</td><!-- Tempo -->
                       <td align="right">{{item.quantidade_compra}}</td><!-- Quantidade -->
                       <td align="right"><strong>R$ {{item.valor_compra|floatformat:"2g"}}</strong></td><!-- Ordem -->
+                      <td align="right"><strong>R$ {{preco_medio|floatformat:"2g"}}</strong></td><!-- Preco Medio -->
                       <td align="right">R$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                       <td align="right"><font color="red"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td><!-- Lucro -->
                       <td align="right">R$ {{item.debito_total_compra|floatformat:"2g"}}</td><!-- Debito -->
@@ -55,6 +58,7 @@
                       <td>{{data_compra|timesince}}</td>
                       <td align="right">{{item.quantidade_compra}}</td>
                       <td align="right"><strong>U$ {{item.valor_compra|floatformat:"2g"}}</strong></td>
+                      <td align="right"><strong>R$ {{preco_medio|floatformat:"2g"}}</strong></td><!-- Preco Medio -->
                       <td align="right">U$ {{item.fechamento_valor|floatformat:"2g"}}<small><sub> {{fechamento_data|date:"d M Y"}}</sub></small></td><!-- Fechamento -->
                       <td align="right"><font color="red"><strong>{{lucro|floatformat:"2g"}}  %</strong></font></td>
                       <td align="right">U$ {{item.debito_total_compra|floatformat:"2g"}}</td>                

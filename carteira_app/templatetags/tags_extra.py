@@ -56,7 +56,12 @@ def calcula_preco_medio(ticker,valor_compra,carteira):
     quantidade = 0
     preco_medio = 0
     valor_total = 0
-    for acao in carteira['acao']:
-        if acao['codigo_b3'] == ticker and acao['valor_compra'] != valor_compra:
-            quantidade = quantidade + acao['quantidade_compra']
-            valor_total = valor_total + (acao['valor_compra'] * acao['quantidade_compra'])
+    for acao in carteira:
+        if acao['codigo_b3'] == ticker and acao['valor_compra'] != valor_compra:            
+            valor_total = valor_total + (float(acao['valor_compra']) * float(acao['quantidade_compra']))
+            quantidade = quantidade + float(acao['quantidade_compra'])
+            
+    if valor_total != 0 or quantidade != 0:
+        preco_medio = valor_total / quantidade
+
+    return(preco_medio)
