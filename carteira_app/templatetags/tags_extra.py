@@ -18,6 +18,7 @@ def fechamento(ticker,pais):
         hoje =  hoje + timedelta(days=-1)
 
     if pais == 'brasil':
+        print('======= TENTOU ACESSAR API na TAGEXTRA ===========')
         url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '.SAO' + '&apikey=CX9G8JJCF9WDPS9N'
         resposta = requests.get(url)
         preco = resposta.json()
@@ -27,6 +28,7 @@ def fechamento(ticker,pais):
             fechamento_ajustado = 0
             print(preco['Note'])
     elif pais == 'eua':
+        print('======= TENTOU ACESSAR API na TAGEXTRA ===========')
         print('Entrou no ' + pais + ' com o ticker ' + ticker)
         url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '&apikey=CX9G8JJCF9WDPS9N'
         resposta = requests.get(url)
@@ -52,16 +54,25 @@ def calcula_porcentagem(ordem,fechamento):
     return(round(resultado,2))
 
 @register.simple_tag
-def calcula_preco_medio(ticker,valor_compra,carteira):
-    quantidade = 0
+def calcula_preco_medio(ticker,valor_compra,debito_total_compra,quantidade_compra,carteira):
+    quantidade = float(quantidade_compra)
     preco_medio = 0
-    valor_total = 0
+    valor_total = float(debito_total_compra)
     for acao in carteira:
         if acao['codigo_b3'] == ticker and acao['valor_compra'] != valor_compra:            
-            valor_total = valor_total + (float(acao['valor_compra']) * float(acao['quantidade_compra']))
+            valor_total = valor_total + float(acao['debito_total_compra'])
             quantidade = quantidade + float(acao['quantidade_compra'])
+        else:
+            preco_medio = float(debito_total_compra) / float(quantidade_compra)
             
     if valor_total != 0 or quantidade != 0:
         preco_medio = valor_total / quantidade
 
     return(preco_medio)
+
+@register.simple_tag
+def compara_preco_medio (preco_medio,fechamento):
+    if float(preco_medio) <= float(fechamento):
+        return('green')
+    else:
+        return('red')

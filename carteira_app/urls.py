@@ -7,5 +7,7 @@ app_name = 'carteira_app'
 urlpatterns = [
     path('', views.menu, name='menu'),
     path('registrar_compra/', views.registrar_compra, name='registrar_compra'),
-    path('consultar_carteira/<str:pais>/', views.consultar_carteira, name='consultar_carteira'),    
+    path('consultar_carteira/<str:pais>', views.consultar_carteira, name='consultar_carteira'),
+    path('ordenar_carteira/<str:pais>/<str:chave>/<str:ordem>', views.ordenar_carteira, name='ordenar_carteira'),
+        
     ]

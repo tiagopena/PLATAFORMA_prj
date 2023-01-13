@@ -27,6 +27,28 @@ def consultar_carteira(request,pais):
         }
         return render (request, 'consultar_carteira.html', context=conteudo)
 
+def ordenar_carteira(request,pais,chave,ordem):
+    if Arquivos_Class.carteira_atualizada == False:
+        mensagem_erro = 'Arquivo com a carteira não existe'
+        conteudo = {
+            'mensagem_erro' : mensagem_erro
+        }
+        return render (request, 'erro_carteira.html', context=conteudo)
+    else:
+        carteira_acao = Arquivos_Class.carteira_atualizada()['acao']
+        carteira_acao.sort(key=lambda x: x[chave],reverse=False)
+        carteira_ordenada = {
+            "ultima_consulta":Arquivos_Class.carteira_atualizada()['ultima_consulta'],
+            "acao": carteira_acao
+        }
+
+        conteudo = {
+            'pais' : pais,
+            'carteira' : carteira_ordenada,
+        }
+        return render (request, 'consultar_carteira.html', context=conteudo)
+
+
 def registrar_compra(request):
     item_novo_json = ''
     if request.POST:

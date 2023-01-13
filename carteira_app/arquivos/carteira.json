@@ -1,17 +1,17 @@
 {
-    "ultima_consulta":"2023-01-12 17:02:03",
+    "ultima_consulta":"2023-01-13 15:36:34",
     "acao":[
         {
             "pais":"eua",
             "codigo_b3":"AAPL",
-            "data_compra":"2020-07-20",
+            "data_compra":"2020-07-28",
             "quantidade_compra":"2",
             "valor_compra":"94.25",
             "debito_total_compra":"188.50",
             "stop_venda":"139.00",
             "alvo_venda":"176.00",
-            "fechamento_data":"2023-01-11",
-            "fechamento_valor":"133.4900"
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"133.4100"
         },
         {
             "pais":"brasil",
@@ -22,8 +22,8 @@
             "debito_total_compra":"3292.59",
             "stop_venda":"9.67",
             "alvo_venda":"33.73",
-            "fechamento_data":"2023-01-11",
-            "fechamento_valor":"24.2800"
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"24.6300"
         },
         {
             "pais":"brasil",
@@ -34,8 +34,80 @@
             "debito_total_compra":"2332.30",
             "stop_venda":"21.93",
             "alvo_venda":"33.80",
-            "fechamento_data":"2023-01-11",
-            "fechamento_valor":"24.2800"
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"24.6300"
+        },
+        {
+            "pais":"eua",
+            "codigo_b3":"ATVI",
+            "data_compra":"2020-08-13",
+            "quantidade_compra":"2",
+            "valor_compra":"82.7",
+            "debito_total_compra":"165.4",
+            "stop_venda":"71",
+            "alvo_venda":"104.35",
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"76.9000"
+        },
+        {
+            "pais":"eua",
+            "codigo_b3":"ATVI",
+            "data_compra":"2022-12-30",
+            "quantidade_compra":"3",
+            "valor_compra":"76.39",
+            "debito_total_compra":"231.67",
+            "stop_venda":"71",
+            "alvo_venda":"104.35",
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"76.9000"
+        },
+        {
+            "pais":"eua",
+            "codigo_b3":"NVDA",
+            "data_compra":"2020-09-03",
+            "quantidade_compra":"2",
+            "valor_compra":"130.75",
+            "debito_total_compra":"161.5",
+            "stop_venda":"108.75",
+            "alvo_venda":"346",
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"165.1100"
+        },
+        {
+            "pais":"eua",
+            "codigo_b3":"NCLH",
+            "data_compra":"2021-03-19",
+            "quantidade_compra":"5",
+            "valor_compra":"28.59",
+            "debito_total_compra":"142.95",
+            "stop_venda":"7.08",
+            "alvo_venda":"59.81",
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"15.3500"
+        },
+        {
+            "pais":"eua",
+            "codigo_b3":"DIS",
+            "data_compra":"2021-06-03",
+            "quantidade_compra":"2",
+            "valor_compra":"175.83",
+            "debito_total_compra":"351.66",
+            "stop_venda":"79.32",
+            "alvo_venda":"202.8",
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"99.8100"
+        },
+        {
+            "pais":"brasil",
+            "codigo_b3":"AMER3",
+            "data_compra":"2023-01-13",
+            "quantidade_compra":"100",
+            "valor_compra":"2.78",
+            "debito_total_compra":"283.68",
+            "stop_venda":"3",
+            "alvo_venda":"6",
+            "fechamento_data":"2023-01-12",
+            "fechamento_valor":"2.7200"
         }
     ]
 }

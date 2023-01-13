@@ -24,7 +24,7 @@ class Arquivos_Class(models.Model):
     # Atualizar itens
     def carteira_atualizada():
         agora = datetime.now()
-        um_dia = timedelta(hours=24.1)
+        dois_dias = timedelta(hours=48.1)
         um_minuto = timedelta(seconds=61)
         qtd_api = 0
         caminho_arquivo_carteira = os.getcwd() + '\\carteira_app\\arquivos\\carteira.json'
@@ -36,14 +36,14 @@ class Arquivos_Class(models.Model):
                 if (agora - ultima_consulta) > um_minuto:
                     for acao in carteira_json['acao']:
                         data_fechamento = datetime.strptime(acao['fechamento_data'],"%Y-%m-%d")                    
-                        if ((agora - data_fechamento) > um_dia) and (qtd_api < 5):
+                        if ((agora - data_fechamento) > dois_dias) and (qtd_api < 5):
                             resultado = Arquivos_Class.consulta_api(acao['pais'],acao['codigo_b3'])
                             #print(type(resultado[1]))
                             acao['fechamento_data'] = resultado[1]
                             acao['fechamento_valor'] = resultado[0]
                             qtd_api = qtd_api + 1
                         else:
-                            print('{0} foi atualizado a menos de um dia'.format(acao['codigo_b3']))
+                            print('{0} foi atualizado a menos de dois dias'.format(acao['codigo_b3']))
                     carteira_json['ultima_consulta'] = datetime.strftime(agora,"%Y-%m-%d %H:%M:%S")
                 else:
                     print('A ultima consulta foi realizada em {0}'.format(ultima_consulta))
@@ -100,8 +100,10 @@ class Arquivos_Class(models.Model):
 
     def consulta_api(pais,ticker):
         if pais == 'brasil':
+            print('======= TENTOU ACESSAR API no MODELS ===========')
             url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '.SAO&apikey=CX9G8JJCF9WDPS9N'
         elif pais == 'eua':
+            print('======= TENTOU ACESSAR API no MODELS ===========')
             url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '&apikey=CX9G8JJCF9WDPS9N'            
         resposta = requests.get(url)
         json_acao = resposta.json()
@@ -111,6 +113,9 @@ class Arquivos_Class(models.Model):
         else:
             print(json_acao)
             return(json_acao['Global Quote']['05. price'],json_acao['Global Quote']['07. latest trading day'])
+
+    
+    
 
     '''
 

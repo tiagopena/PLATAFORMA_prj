@@ -78,7 +78,9 @@
 </style>
 {% endblock %}
 
+<!--
 <link href="navbars.css" rel="stylesheet">
+-->
 {% block custom_syles %}
 {% endblock%}  
 </head>
@@ -181,6 +183,8 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{% url 'carteira_app:consultar_carteira' 'brasil' %}">Brasil</a></li>
             <li><a class="dropdown-item" href="{% url 'carteira_app:consultar_carteira' 'eua' %}">Eua</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'carteira_app:ordenar_carteira' 'total' 'data_compra' 'True' %}">Ordem</a></li>            
           </ul>
         </li>
 
