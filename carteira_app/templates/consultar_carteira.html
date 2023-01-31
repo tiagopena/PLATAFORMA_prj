@@ -256,6 +256,9 @@
   </table>
   <br>
   <table class="table table-striped table-hover">
+    {% calcula_total carteira 'brasil' as total_brasil %}
+    {% calcula_total carteira 'eua' as total_eua %}
+    {% retorna_cotacao_dolar total_eua as cotacao %}
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -267,9 +270,9 @@
     <tbody>
       <tr>
         <th scope="row">Posicionado</th>
-        <td>R$</td>
-        <td>U$</td>
-        <td>R$</td>
+        <td>R$ {{total_brasil|floatformat:"2g"}}</td>
+        <td>U$ {{total_eua|floatformat:"2g"}}</td>
+        <td>R$ {{ cotacao.0|floatformat:"2g" }} {{ cotacao.2|floatformat:"2g" }}</td>
       </tr>
     </tbody>
   
