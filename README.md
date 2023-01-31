@@ -6,7 +6,7 @@ python3 manage.py runserver
 
 WINDOWS
 cd \Users\tiago\OneDrive\Documentos\Desenvolvimento\
-.\smartweb_env\Scripts\activate
+.\plataforma_env\Scripts\activate
 cd PLATAFORMA_prj
 python manage.py runserver
 
