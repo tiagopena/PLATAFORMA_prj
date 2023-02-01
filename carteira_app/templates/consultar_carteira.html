@@ -256,9 +256,13 @@
   </table>
   <br>
   <table class="table table-striped table-hover">
-    {% calcula_total carteira 'brasil' as total_brasil %}
-    {% calcula_total carteira 'eua' as total_eua %}
-    {% retorna_cotacao_dolar total_eua as cotacao %}
+    {% calcula_total_posicionado carteira 'brasil' as total_brasil %}
+    {% calcula_total_posicionado carteira 'eua' as total_eua %}
+    {% retorna_cotacao_dolar total_eua.0 total_brasil.0 as cotacao_posicionado %}
+    {% retorna_cotacao_dolar total_eua.1 total_brasil.1 as cotacao_posicionado_fechamento %}
+    {% calcula_porcentagem total_brasil.0 total_brasil.1 as lucro_brasil %}
+    {% calcula_porcentagem total_eua.0 total_eua.1 as lucro_eua %}
+    {% calcula_porcentagem cotacao_posicionado.3 cotacao_posicionado_fechamento.3 as lucro_total %}
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -270,9 +274,15 @@
     <tbody>
       <tr>
         <th scope="row">Posicionado</th>
-        <td>R$ {{total_brasil|floatformat:"2g"}}</td>
-        <td>U$ {{total_eua|floatformat:"2g"}}</td>
-        <td>R$ {{ cotacao.0|floatformat:"2g" }} {{ cotacao.2|floatformat:"2g" }}</td>
+        <td>R$ {{total_brasil.0|floatformat:"2g"}}</td>
+        <td>U$ {{total_eua.0|floatformat:"2g"}}</td>
+        <td>R$ {{ cotacao_posicionado.3|floatformat:"2g" }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Posicionado Fechado</th>
+        <td>R$ {{total_brasil.1|floatformat:"2g"}} {{lucro_brasil}}%</td>
+        <td>U$ {{total_eua.1|floatformat:"2g"}} {{lucro_eua}}%</td>
+        <td>R$ {{ cotacao_posicionado_fechamento.3|floatformat:"2g" }}  {{lucro_total}}</td>
       </tr>
     </tbody>
   

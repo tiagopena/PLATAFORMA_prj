@@ -82,26 +82,18 @@ def compara_preco_medio (preco_medio,fechamento):
         return('red')
     
 @register.simple_tag
-def calcula_total (carteira_json,pais):
-    total = 0
+def calcula_total_posicionado (carteira_json,pais):
+    total_psicionado = 0
+    total_psicionado_fechado = 0
     for acao in carteira_json['acao']:
         if acao['pais'] == pais:
-            total = total + float(acao['debito_total_compra'])
-            #print(currency.get_currency_list())
-            #print(currency.get('USD',start='2023-01-31',end='2023-01-31'))
+            total_psicionado = total_psicionado + float(acao['debito_total_compra'])
+            total_psicionado_fechado = total_psicionado_fechado + (float(acao['fechamento_valor']) * float(acao['quantidade_compra']))
             
-    #eq = ptax.get_endpoint('CotacaoMoedaDia')
-    #print(eq.query().parameters(moeda='USD', dataCotacao='1/31/2023').collect())
-
-    
-    #print(hoje)
-
-    
-
-    return(total)
+    return(total_psicionado,total_psicionado_fechado)
 
 @register.simple_tag
-def retorna_cotacao_dolar(total_eua):
+def retorna_cotacao_dolar(total_eua,total_brasil):
     hoje = datetime.strftime(datetime.now(),format="%m-%d-%Y")
     url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao=' + chr(39) + hoje + chr(39) + '&$format=json&$select=cotacaoCompra,dataHoraCotacao'
     resposta = requests.get(url)
@@ -109,5 +101,6 @@ def retorna_cotacao_dolar(total_eua):
     valor_cotacao = cotacao['value'][1]['cotacaoCompra']
     data_cotacao = cotacao['value'][1]['dataHoraCotacao']
     total_eua_corrigido = float(total_eua) * float(valor_cotacao)
+    total_eua_brasil_corrigido = total_eua_corrigido + total_brasil
     
-    return(valor_cotacao,data_cotacao,total_eua_corrigido)
+    return(valor_cotacao,data_cotacao,total_eua_corrigido,total_eua_brasil_corrigido)
