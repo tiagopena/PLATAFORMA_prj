@@ -83,24 +83,30 @@ def compara_preco_medio (preco_medio,fechamento):
     
 @register.simple_tag
 def calcula_total_posicionado (carteira_json,pais):
-    total_psicionado = 0
-    total_psicionado_fechado = 0
+    total_posicionado = 0
+    total_posicionado_atualizado = 0
     for acao in carteira_json['acao']:
         if acao['pais'] == pais:
-            total_psicionado = total_psicionado + float(acao['debito_total_compra'])
-            total_psicionado_fechado = total_psicionado_fechado + (float(acao['fechamento_valor']) * float(acao['quantidade_compra']))
-            
-    return(total_psicionado,total_psicionado_fechado)
+            total_posicionado = total_posicionado + float(acao['debito_total_compra'])
+            total_posicionado_atualizado = total_posicionado_atualizado + (float(acao['fechamento_valor']) * float(acao['quantidade_compra']))            
+    return(total_posicionado,total_posicionado_atualizado)
 
 @register.simple_tag
-def retorna_cotacao_dolar(total_eua,total_brasil):
+def retorna_convertido (total_eua):
     hoje = datetime.strftime(datetime.now(),format="%m-%d-%Y")
     url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao=' + chr(39) + hoje + chr(39) + '&$format=json&$select=cotacaoCompra,dataHoraCotacao'
     resposta = requests.get(url)
     cotacao = resposta.json()
-    valor_cotacao = cotacao['value'][1]['cotacaoCompra']
-    data_cotacao = cotacao['value'][1]['dataHoraCotacao']
+    valor_cotacao = cotacao['value'][0]['cotacaoCompra']
+    data_cotacao = datetime.strptime((cotacao['value'][0]['dataHoraCotacao']), '%Y-%m-%d %H:%M:%S.%f')
     total_eua_corrigido = float(total_eua) * float(valor_cotacao)
-    total_eua_brasil_corrigido = total_eua_corrigido + total_brasil
-    
-    return(valor_cotacao,data_cotacao,total_eua_corrigido,total_eua_brasil_corrigido)
+    return(valor_cotacao,data_cotacao,total_eua_corrigido)
+
+@register.simple_tag
+def totaliza_apurado(total_brasil_posicionado,total_brasil_posicionado_atualizado,total_eua_posicionado,total_eua_posicionado_atualizado,cotacao):
+    total_posicionado = float(total_brasil_posicionado) + (float(total_eua_posicionado) * float(cotacao))
+    total_posicionado_atualizado = float(total_brasil_posicionado_atualizado) + (float(total_eua_posicionado_atualizado) * float(cotacao))
+    lucro = round((((float(total_posicionado_atualizado) * 100) / float(total_posicionado)) - 100),2)
+    return(total_posicionado,total_posicionado_atualizado,lucro)
+    #return(round(resultado,2))
+
