@@ -7,9 +7,47 @@ import json
 from bcb import currency,PTAX
 
 ptax = PTAX()
-
-
 register = template.Library()
+
+@register.simple_tag
+def calcula_preco_medio(ticker,valor_compra,debito_total_compra,quantidade_compra,carteira):
+    preco_medio = 0
+    quantidade = float(quantidade_compra)    
+    valor_total = float(debito_total_compra)
+    for acao in carteira:
+        if acao['codigo_b3'] == ticker and acao['valor_compra'] != valor_compra:            
+            valor_total = valor_total + float(acao['debito_total_compra'])
+            quantidade = quantidade + float(acao['quantidade_compra'])
+        else:
+            preco_medio = float(debito_total_compra) / float(quantidade_compra)            
+    if valor_total != 0 or quantidade != 0:
+        preco_medio = valor_total / quantidade
+    return(preco_medio)
+
+@register.simple_tag
+def calcula_porcentagem(quantidade,debito_total,fechamento):
+    valor_ordem = float(debito_total) / float(quantidade)
+    resultado = ((float(fechamento) * 100) / float(valor_ordem)) - 100
+    return(round(resultado,2))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @register.simple_tag
 def fechamento(ticker,pais):
@@ -51,28 +89,9 @@ def formata_data(data_eua):
 
     return(data_brasil)
 
-@register.simple_tag
-def calcula_porcentagem(ordem,fechamento):
-    resultado = ((float(fechamento) * 100) / float(ordem)) - 100
 
-    return(round(resultado,2))
 
-@register.simple_tag
-def calcula_preco_medio(ticker,valor_compra,debito_total_compra,quantidade_compra,carteira):
-    quantidade = float(quantidade_compra)
-    preco_medio = 0
-    valor_total = float(debito_total_compra)
-    for acao in carteira:
-        if acao['codigo_b3'] == ticker and acao['valor_compra'] != valor_compra:            
-            valor_total = valor_total + float(acao['debito_total_compra'])
-            quantidade = quantidade + float(acao['quantidade_compra'])
-        else:
-            preco_medio = float(debito_total_compra) / float(quantidade_compra)
-            
-    if valor_total != 0 or quantidade != 0:
-        preco_medio = valor_total / quantidade
 
-    return(preco_medio)
 
 @register.simple_tag
 def compara_preco_medio (preco_medio,fechamento):

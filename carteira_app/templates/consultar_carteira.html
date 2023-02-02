@@ -19,7 +19,7 @@
         <th scope="col"><a class="btn btn-outline-dark" href="{% url 'carteira_app:ordenar_carteira' pais 'quantidade_compra' 'True' %}" role="button">Quantidade</a></th><!-- Quantidade -->
         <th scope="col"><a class="btn btn-outline-dark" href="{% url 'carteira_app:ordenar_carteira' pais 'valor_compra' 'True' %}" role="button">Ordem</a></th><!-- Ordem -->
         <th scope="col"><a class="btn btn-outline-dark" href="#" role="button">P. Médio</a></th><!-- Preco Medio -->
-        <th scope="col"><a class="btn btn-outline-dark" href="{% url 'carteira_app:ordenar_carteira' pais 'fechamento_valor' 'True' %}" role="button">Fechamento</a></th><!-- Fechamento -->
+        <th scope="col"><a class="btn btn-outline-dark" href="{% url 'carteira_app:atualizar_fechamento_carteira' pais %}" role="button">Fechamento</a></th><!-- Fechamento -->
         <th scope="col"><a class="btn btn-outline-dark" href="#" role="button">Lucro</a></th><!-- Lucro -->
         <th scope="col"><a class="btn btn-outline-dark" href="{% url 'carteira_app:ordenar_carteira' pais 'debito_total_compra' 'True' %}" role="button">Débito</a></th><!-- Debito -->
         <th scope="col"><a class="btn btn-outline-dark" href="{% url 'carteira_app:ordenar_carteira' pais 'stop_venda' 'True' %}" role="button">Stop</a></th><!-- Stop -->
@@ -33,7 +33,7 @@
         {% for item in carteira.acao %}
         {% formata_data item.data_compra as data_compra %}
         {% formata_data item.fechamento_data as fechamento_data %}
-        {% calcula_porcentagem item.valor_compra item.fechamento_valor as lucro %}
+        {% calcula_porcentagem item.quantidade_compra item.debito_total_compra item.fechamento_valor as lucro %}
         {% calcula_preco_medio item.codigo_b3 item.valor_compra item.debito_total_compra item.quantidade_compra carteira.acao as preco_medio %}
         {% compara_preco_medio preco_medio item.fechamento_valor as retorno_preco_medio%}
           {% if lucro < 0 %}
@@ -135,7 +135,7 @@
         {% for item in carteira.acao %}
         {% formata_data item.data_compra as data_compra %}
         {% formata_data item.fechamento_data as fechamento_data %}
-        {% calcula_porcentagem item.valor_compra item.fechamento_valor as lucro %}
+        {% calcula_porcentagem item.quantidade_compra item.debito_total_compra item.fechamento_valor as lucro %}
         {% calcula_preco_medio item.codigo_b3 item.valor_compra item.debito_total_compra item.quantidade_compra carteira.acao as preco_medio %}
         {% compara_preco_medio preco_medio item.fechamento_valor as retorno_preco_medio%}
           {% if lucro < 0 %}
@@ -195,7 +195,7 @@
         {% for item in carteira.acao %}
         {% formata_data item.data_compra as data_compra %}
         {% formata_data item.fechamento_data as fechamento_data %}
-        {% calcula_porcentagem item.valor_compra item.fechamento_valor as lucro %}
+        {% calcula_porcentagem item.quantidade_compra item.debito_total_compra item.fechamento_valor as lucro %}
         {% calcula_preco_medio item.codigo_b3 item.valor_compra item.debito_total_compra item.quantidade_compra carteira.acao as preco_medio %}
         {% compara_preco_medio preco_medio item.fechamento_valor as retorno_preco_medio%}
           {% if lucro < 0 %}
@@ -258,12 +258,9 @@
   <table class="table table-hover table-sm">
     {% calcula_total_posicionado carteira 'brasil' as total_posicionado_brasil %}
     {% calcula_total_posicionado carteira 'eua' as total_posicionado_eua %}
-    {% retorna_convertido total_posicionado_eua.1 as total_posicionado_eua_corrigido %}
-    {% calcula_porcentagem total_posicionado_brasil.0 total_posicionado_brasil.1 as lucro_brasil %}
-    {% calcula_porcentagem total_posicionado_eua.0 total_posicionado_eua.1 as lucro_eua %}
-
-
-
+    {% retorna_convertido total_posicionado_eua.1 as total_posicionado_eua_corrigido %}    
+    {% calcula_porcentagem '1' total_posicionado_brasil.0 total_posicionado_brasil.1 as lucro_brasil %}
+    {% calcula_porcentagem '1' total_posicionado_eua.0 total_posicionado_eua.1 as lucro_eua %}
     {% totaliza_apurado total_posicionado_brasil.0 total_posicionado_brasil.1 total_posicionado_eua.0 total_posicionado_eua.1 total_posicionado_eua_corrigido.0 as total %}
 
 

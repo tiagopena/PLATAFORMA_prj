@@ -1,14 +1,116 @@
 from django.db import models
-from pandas_datareader import data as cotacao
+#from pandas_datareader import data as cotacao
 import json
 import os
 from datetime import datetime,timedelta
 import requests
 import tempfile
 import shutil
+import yfinance as yf
 
 
 class Arquivos_Class(models.Model):
+    # Carrega carteira
+    def carrega_carteira():
+        caminho_arquivo_carteira = os.getcwd() + '\\carteira_app\\arquivos\\carteira.json'
+        if not os.path.exists(caminho_arquivo_carteira):
+            print('O arquivo ' + caminho_arquivo_carteira + 'nao existe para carregar a carteira.')
+            return(False)
+        else:
+            with open (caminho_arquivo_carteira, 'r', encoding='utf-8') as arquivo_carteira:
+                carteira_json = json.load(arquivo_carteira)
+                arquivo_carteira.close()
+                return(carteira_json)
+
+    # Atualizar carteira com novo fechamento
+    def atualizar_fechamento_carteira():
+        caminho_arquivo_carteira = os.getcwd() + '\\carteira_app\\arquivos\\carteira.json'
+        if not os.path.exists(caminho_arquivo_carteira):
+            print('O arquivo ' + caminho_arquivo_carteira + 'nao existe para atualizar a carteira.')
+            return(False)
+        else:
+            with open (caminho_arquivo_carteira, 'r', encoding='utf-8') as arquivo_carteira, \
+                tempfile.NamedTemporaryFile('w', delete=False) as arquivo_temporario:
+                carteira_json = json.load(arquivo_carteira)
+                ultima_consulta = datetime.strptime(carteira_json['ultima_consulta'],"%Y-%m-%d %H:%M:%S")
+                for acao in carteira_json['acao']:
+                    resultado = Arquivos_Class.consulta_api_yfinance(acao['pais'],acao['codigo_b3'])
+                    #acao['fechamento_data'] = '2023-02-02'
+                    acao['fechamento_valor'] = resultado
+                carteira_json['ultima_consulta'] = datetime.strftime(datetime.now(),"%Y-%m-%d %H:%M:%S")
+                json.dump(carteira_json,arquivo_temporario,ensure_ascii=False,indent=4,separators=(',',':'))
+            shutil.move(arquivo_temporario.name, caminho_arquivo_carteira)
+            arquivo_carteira.close()
+            arquivo_temporario.close()
+            return(carteira_json)
+
+    def consulta_api_yfinance(pais,ticker):
+        # https://pypi.org/project/yfinance/
+        if pais == 'brasil':
+            #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '.SAO&apikey=CX9G8JJCF9WDPS9N'
+            resposta_ticker = yf.Ticker(ticker + ".SA")
+        elif pais == 'eua':
+            #url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker + '&apikey=CX9G8JJCF9WDPS9N'
+            resposta_ticker = yf.Ticker(ticker)
+        open = (resposta_ticker.history(period="1d")).iat[0,0]
+        high = (resposta_ticker.history(period="1d")).iat[0,1]
+        low = (resposta_ticker.history(period="1d")).iat[0,2]
+        close = (resposta_ticker.history(period="1d")).iat[0,3]
+        volume = (resposta_ticker.history(period="1d")).iat[0,4]
+        dividends = (resposta_ticker.history(period="1d")).iat[0,5]
+        stock_splits = (resposta_ticker.history(period="1d")).iat[0,6]
+        print(resposta_ticker.history(period="1d"))
+        return(float(close))
+
+    def adiciona_item_carteira(item_novo_json):
+        caminho_arquivo = os.getcwd() + '/carteira_app/arquivos/carteira.json'
+
+        # Se o arquivo nao existe, sera criado:
+        if not os.path.exists(caminho_arquivo):
+            json_inicial = {
+                "ultima_consulta": datetime.strftime(datetime.now(),"%Y-%m-%d %H:%M:%S"),
+                "acao" : [item_novo_json]
+            }
+            with open (caminho_arquivo, 'w', encoding='utf-8') as arquivo_json:
+                json.dump(json_inicial, arquivo_json, ensure_ascii=False, indent=2)
+                arquivo_json.close()
+        else:
+            with open (caminho_arquivo, 'r', encoding='utf-8') as arquivo_carteira, \
+                tempfile.NamedTemporaryFile('w', delete=False) as arquivo_temporario:
+                carteira_desatualizada_json = json.load(arquivo_carteira)
+                carteira_desatualizada_json['acao'].append(item_novo_json)
+                carteira_desatualizada_json['ultima_consulta'] = datetime.strftime(datetime.now(),"%Y-%m-%d %H:%M:%S")
+                json.dump(carteira_desatualizada_json,arquivo_temporario,ensure_ascii=False,indent=4,separators=(',',':'))
+            shutil.move(arquivo_temporario.name, caminho_arquivo)
+            arquivo_carteira.close()
+            arquivo_temporario.close()
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    '''
+
+
     # Consulta carteira
     def consulta_carteira():
         caminho_arquivo_carteira = os.getcwd() + '\\carteira_app\\arquivos\\carteira.json'
@@ -68,35 +170,14 @@ class Arquivos_Class(models.Model):
 
 
 
-    def atualizar_carteira(item_novo_json):
-        caminho_arquivo = os.getcwd() + '/carteira_app/arquivos/carteira.json'
-
-        # Se o arquivo nao existe, sera criado:
-        if not os.path.exists(caminho_arquivo):
-            json_inicial = {
-                "ultima_consulta": datetime.strftime(datetime.now(),"%Y-%m-%d %H:%M:%S"),
-                "acao" : [item_novo_json]
-            }
-            with open (caminho_arquivo, 'w', encoding='utf-8') as arquivo_json:
-                json.dump(json_inicial, arquivo_json, ensure_ascii=False, indent=2)
-                arquivo_json.close()
-        else:
-            with open (caminho_arquivo, 'r', encoding='utf-8') as arquivo_carteira, \
-                tempfile.NamedTemporaryFile('w', delete=False) as arquivo_temporario:
-                carteira_desatualizada_json = json.load(arquivo_carteira)
-                carteira_desatualizada_json['acao'].append(item_novo_json)
-                carteira_desatualizada_json['ultima_consulta'] = datetime.strftime(datetime.now(),"%Y-%m-%d %H:%M:%S")
-                json.dump(carteira_desatualizada_json,arquivo_temporario,ensure_ascii=False,indent=4,separators=(',',':'))
-            shutil.move(arquivo_temporario.name, caminho_arquivo)
-            arquivo_carteira.close()
-            arquivo_temporario.close()
+    
     
 
 
 
 
 
-
+    
 
     def consulta_api(pais,ticker):
         if pais == 'brasil':
@@ -117,7 +198,7 @@ class Arquivos_Class(models.Model):
     
     
 
-    '''
+    
 
     def consutar_carteira():
         caminho_arquivo = os.getcwd() + '/carteira_app/arquivos/carteira.json'
