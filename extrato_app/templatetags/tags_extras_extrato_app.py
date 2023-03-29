@@ -3,7 +3,6 @@ from django.template.defaultfilters import stringfilter
 #from django_pandas.io import read_frame
 import os
 
-
 register = template.Library()
 
 
