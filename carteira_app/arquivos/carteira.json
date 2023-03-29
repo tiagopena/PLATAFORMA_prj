@@ -1,5 +1,5 @@
 {
-    "ultima_consulta":"2023-02-02 18:19:19",
+    "ultima_consulta":"2023-03-14 16:53:43",
     "acao":[
         {
             "pais":"eua",
@@ -10,8 +10,8 @@
             "debito_total_compra":"188.50",
             "stop_venda":"139.00",
             "alvo_venda":"176.00",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":150.82000732421875
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":151.52999877929688
         },
         {
             "pais":"brasil",
@@ -22,8 +22,8 @@
             "debito_total_compra":"3292.59",
             "stop_venda":"9.67",
             "alvo_venda":"33.73",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":24.520000457763672
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":23.760000228881836
         },
         {
             "pais":"brasil",
@@ -34,8 +34,8 @@
             "debito_total_compra":"2332.30",
             "stop_venda":"21.93",
             "alvo_venda":"33.80",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":24.520000457763672
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":23.760000228881836
         },
         {
             "pais":"eua",
@@ -46,8 +46,8 @@
             "debito_total_compra":"165.4",
             "stop_venda":"71",
             "alvo_venda":"104.35",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":77.11000061035156
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":78.95999908447266
         },
         {
             "pais":"eua",
@@ -58,8 +58,8 @@
             "debito_total_compra":"231.67",
             "stop_venda":"71",
             "alvo_venda":"104.35",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":77.11000061035156
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":78.95999908447266
         },
         {
             "pais":"eua",
@@ -70,8 +70,8 @@
             "debito_total_compra":"261.5",
             "stop_venda":"108.75",
             "alvo_venda":"346",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":217.08999633789062
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":238.27000427246094
         },
         {
             "pais":"eua",
@@ -82,8 +82,8 @@
             "debito_total_compra":"142.95",
             "stop_venda":"7.08",
             "alvo_venda":"59.81",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":17.110000610351562
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":13.335000038146973
         },
         {
             "pais":"eua",
@@ -94,8 +94,8 @@
             "debito_total_compra":"351.66",
             "stop_venda":"79.32",
             "alvo_venda":"202.8",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":113.20999908447266
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":93.05999755859375
         },
         {
             "pais":"brasil",
@@ -106,8 +106,8 @@
             "debito_total_compra":"283.68",
             "stop_venda":"3",
             "alvo_venda":"6",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":1.7100000381469727
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":1.0299999713897705
         },
         {
             "pais":"eua",
@@ -118,8 +118,20 @@
             "debito_total_compra":"487.5",
             "stop_venda":"475.5",
             "alvo_venda":"557.5",
-            "fechamento_data":"2023-02-02",
-            "fechamento_valor":470.8299865722656
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":462.82000732421875
+        },
+        {
+            "pais":"brasil",
+            "codigo_b3":"BBAS3",
+            "data_compra":"2023-03-02",
+            "quantidade_compra":"100",
+            "valor_compra":"38.00",
+            "debito_total_compra":"3806.75",
+            "stop_venda":"32.00",
+            "alvo_venda":"42.00",
+            "fechamento_data":"2023-03-14",
+            "fechamento_valor":37.38999938964844
         }
     ]
 }

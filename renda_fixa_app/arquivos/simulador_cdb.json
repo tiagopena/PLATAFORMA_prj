@@ -1,0 +1,56 @@
+{
+    "tipo":"cdb",
+    "parametros":[
+        {
+            "modalidade":"prefixada",
+            "indice":"CDI",
+            "emissor":"BB",
+            "nome":"BB CDB DI",
+            "liquidez":"sim",
+            "prazo":"1800",
+            "rentabilidade":96,
+            "vencimento":"2028-03-01"
+        },
+        {
+            "modalidade":"progressiva",
+            "indice":"CDI",
+            "emissor":"BB",
+            "nome":"BB CDB PROGRESSIVO",
+            "liquidez":"sim",
+            "prazo":"1800",
+            "rentabilidade":100,
+            "vencimento":"2028-03-01"
+        },
+        {
+            "modalidade":"prefixada",
+            "indice":"TAXA",
+            "emissor":"BB",
+            "nome":"BB CDB PRE",
+            "liquidez":"nao",
+            "prazo":"30",
+            "rentabilidade":10.59649,
+            "vencimento":"2023-04-27"
+        },
+        {
+            "modalidade":"prefixada",
+            "indice":"TAXA",
+            "emissor":"BB",
+            "nome":"BB CDB PRE",
+            "liquidez":"nao",
+            "prazo":"360",
+            "rentabilidade":10.84195,
+            "vencimento":"2024-03-22"
+        },
+        {
+            "modalidade":"prefixada",
+            "indice":"TAXA",
+            "emissor":"BB",
+            "nome":"BB CDB PRE",
+            "liquidez":"nao",
+            "prazo":"720",
+            "rentabilidade":9.86110,
+            "vencimento":"2025-03-17"
+        }
+
+    ]
+}

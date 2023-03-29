@@ -177,6 +177,17 @@
         </li>
 
         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Renda Fixa</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'renda_fixa_app:simulador' 'menu' %}">Simulador</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'renda_fixa_app:consultar_carteira' %}">Carteira</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'renda_fixa_app:registrar_compra' %}">Incluir</a></li>            
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Carteira</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'carteira_app:consultar_carteira' 'total' %}">Completa</a></li>

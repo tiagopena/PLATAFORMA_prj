@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'carteira_app.apps.CarteiraAppConfig',
     'extrato_app.apps.ExtratoAppConfig',
+    'renda_fixa_app.apps.RendaFixaAppConfig',
 ]
 
 MIDDLEWARE = [

@@ -112,12 +112,32 @@ def calcula_total_posicionado (carteira_json,pais):
 
 @register.simple_tag
 def retorna_convertido (total_eua):
-    hoje = datetime.strftime(datetime.now(),format="%m-%d-%Y")
-    url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao=' + chr(39) + hoje + chr(39) + '&$format=json&$select=cotacaoCompra,dataHoraCotacao'
+    hoje = datetime.now().date()
+
+    hoje_string = datetime.strftime(hoje,format="%m-%d-%Y")
+    url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao=' + chr(39) + hoje_string + chr(39) + '&$format=json&$select=cotacaoCompra,dataHoraCotacao'
     resposta = requests.get(url)
     cotacao = resposta.json()
+    codigo_retorno = resposta.status_code
+    qtd = 6
+    
+    while codigo_retorno == 200 and cotacao['value'] == [] and qtd != 0:
+        print('ENTROU NO WHILE')
+        #print(hoje)
+        #print(datetime.now().date())
+        #print(hoje)
+        #hoje_time = datetime.strptime(hoje,format="%Y-%m-%d")
+        menos_um_dia = hoje - timedelta(days=1)
+        menos_um_dia_string = datetime.strftime(menos_um_dia,format="%m-%d-%Y")
+        url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao=' + chr(39) + menos_um_dia_string + chr(39) + '&$format=json&$select=cotacaoCompra,dataHoraCotacao'
+        resposta = requests.get(url)
+        cotacao = resposta.json()
+        codigo_retorno = resposta.status_code
+        qtd = qtd - 1
+    
     valor_cotacao = cotacao['value'][0]['cotacaoCompra']
     data_cotacao = datetime.strptime((cotacao['value'][0]['dataHoraCotacao']), '%Y-%m-%d %H:%M:%S.%f')
+
     total_eua_corrigido = float(total_eua) * float(valor_cotacao)
     return(valor_cotacao,data_cotacao,total_eua_corrigido)
 

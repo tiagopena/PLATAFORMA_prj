@@ -35,7 +35,7 @@ class Arquivos_Class(models.Model):
                 ultima_consulta = datetime.strptime(carteira_json['ultima_consulta'],"%Y-%m-%d %H:%M:%S")
                 for acao in carteira_json['acao']:
                     resultado = Arquivos_Class.consulta_api_yfinance(acao['pais'],acao['codigo_b3'])
-                    #acao['fechamento_data'] = '2023-02-02'
+                    acao['fechamento_data'] = datetime.strftime(datetime.now(),"%Y-%m-%d")
                     acao['fechamento_valor'] = resultado
                 carteira_json['ultima_consulta'] = datetime.strftime(datetime.now(),"%Y-%m-%d %H:%M:%S")
                 json.dump(carteira_json,arquivo_temporario,ensure_ascii=False,indent=4,separators=(',',':'))
