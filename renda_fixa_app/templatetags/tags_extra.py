@@ -18,8 +18,16 @@ def calcula_rentabilidade_bruta(indice,di_anual,rentabilidade_banco):
 
 @register.simple_tag
 def imposto_irpf_periodo(capital,rentabilidade_anual,dias):
+    #rentabilidade_anual = 13.65
+
+
     rentabilidade_mensal = (((1 + (rentabilidade_anual/100))**(1/12)) - 1) * 100
     rentabilidade_dia = (((1 + (rentabilidade_anual/100))**(1/252)) - 1) * 100
+
+    print('===========================')
+    print('Rentabilidade dia: {0}'.format(rentabilidade_dia))
+    print('Rentabilidade mes: {0}'.format(rentabilidade_mensal))
+    print('===========================')
     
      
 
@@ -40,8 +48,10 @@ def imposto_irpf_periodo(capital,rentabilidade_anual,dias):
         rendimento_com_imposto = rendimento_sem_imposto * (1 - (15/100))
         liquido = capital + rendimento_com_imposto
     else:
-        liquido = (capital)
-    return (liquido)
+        rendimento_sem_imposto = capital
+        rendimento_com_imposto = capital
+        liquido = capital
+    return (rendimento_sem_imposto,rendimento_com_imposto,liquido)
 
 
 

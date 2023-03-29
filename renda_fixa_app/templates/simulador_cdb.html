@@ -48,43 +48,16 @@
 
       <td>R${{capital|floatformat:"2g"}}</td>
       
-      <td>R${{imposto_6meses|floatformat:"2g"}}</td>
-      <td>R${{imposto_12meses|floatformat:"2g"}}</td>
-      <td>R${{imposto_24meses|floatformat:"2g"}}</td>
-      <td>R${{imposto_25meses|floatformat:"2g"}}</td>
+      <td>R${{imposto_6meses.2|floatformat:"2g"}}<small><sub>R${{imposto_6meses.0|floatformat:"2g"}} R${{imposto_6meses.1|floatformat:"2g"}}</small></sub></td>
+      <td>R${{imposto_12meses.2|floatformat:"2g"}}<small><sub>R${{imposto_12meses.0|floatformat:"2g"}} R${{imposto_12meses.1|floatformat:"2g"}}</small></sub></td>
+      <td>R${{imposto_24meses.2|floatformat:"2g"}}<small><sub>R${{imposto_24meses.0|floatformat:"2g"}} R${{imposto_24meses.1|floatformat:"2g"}}</small></sub></td>
+      <td>R${{imposto_25meses.2|floatformat:"2g"}}<small><sub>R${{imposto_25meses.0|floatformat:"2g"}} R${{imposto_25meses.1|floatformat:"2g"}}</small></sub></td>
       
     </tr>
     {% endfor %}
     
     </tbody>
 </table>
-
-
-{% for investimento in json.parametros %}
-{% calcula_rentabilidade_bruta investimento.indice di_anual investimento.rentabilidade as rentabilidade_bruta %}
-{% rendimento_em_reais capital rentabilidade_bruta as total_em_real %}
-Para o {{json.tipo}} na modalidade {{investimento.modalidade}} emitido por {{investimento.emissor}} que é indexado por {{investimento.indice}},
-com o banco rentabilizando {{investimento.rentabilidade}}% do indice. Sem o Imposto de Renda e o IOF, essa rentabilização acaba sendo de {{rentabilidade_bruta}}. 
-Logo, com um investimento de R$ {{capital}} o rendimento vai ser de {{total_em_real}}.
-<br>
-{% endfor %}
-<br>
-<br><br><br><br><br>
-<br>
-<br>
-<br>
-{{parametros}}
-<br>
-{% for dia in dias %}
-{{dia|date:"d/m/Y"}}
-<br>
-<br>
-{% for investimento in json %}
-
-Para o {{investimento.tipo}}
-{% endfor %}
-
-{% endfor %}
 {% endblock %}
 
 {% block script %}
