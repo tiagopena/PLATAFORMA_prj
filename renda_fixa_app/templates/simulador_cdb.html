@@ -21,22 +21,22 @@
       <th scope="col">Vencimento</th>
       <th scope="col">Rentabilidade</th>      
       <th scope="col">Capital</th>
-      <th scope="col">Bruto</th>
       <th scope="col">6 Meses</th>
-      <th scope="col">1 Ano</th>
-      <th scope="col">2 Anos</th>
-      <th scope="col">2 Anos + </th>
+      <th scope="col">12 Meses</th>
+      <th scope="col">24 Meses</th>
+      <th scope="col">25 Meses</th>
       
     </tr>
   </thead>
   <tbody>
     {% for investimento in json.parametros %}
     {% calcula_rentabilidade_bruta investimento.indice di_anual investimento.rentabilidade as rentabilidade_bruta %}
+    
     {% rendimento_em_reais capital rentabilidade_bruta as total_em_real %}
     {% imposto_irpf_periodo capital rentabilidade_bruta '180' as imposto_6meses %}
-    {% imposto_irpf_periodo capital rentabilidade_bruta '360' as imposto_1ano %}
-    {% imposto_irpf_periodo capital rentabilidade_bruta '720' as imposto_2ano %}
-    {% imposto_irpf_periodo capital rentabilidade_bruta '721' as imposto_mais_2ano %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '360' as imposto_12meses %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '720' as imposto_24meses %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '721' as imposto_25meses %}
     <tr>
       <th scope="row">{{investimento.modalidade|title}}</th>
       <td>{{investimento.emissor}}</td>
@@ -44,13 +44,14 @@
       <td>{{investimento.rentabilidade}}%</td>
       <td>{{investimento.prazo}}</td>
       <td>{{investimento.vencimento}}</td>
-      <td>{{rentabilidade_bruta|floatformat:2}}%</td>      
+      <td>{{rentabilidade_bruta|floatformat:2}}%</td> 
+
       <td>R${{capital|floatformat:"2g"}}</td>
-      <td>R${{total_em_real|floatformat:"2g"}}</td>
+      
       <td>R${{imposto_6meses|floatformat:"2g"}}</td>
-      <td>R${{imposto_1ano|floatformat:"2g"}}</td>
-      <td>R${{imposto_2ano|floatformat:"2g"}}</td>
-      <td>R${{imposto_mais_2ano|floatformat:"2g"}}</td>
+      <td>R${{imposto_12meses|floatformat:"2g"}}</td>
+      <td>R${{imposto_24meses|floatformat:"2g"}}</td>
+      <td>R${{imposto_25meses|floatformat:"2g"}}</td>
       
     </tr>
     {% endfor %}
