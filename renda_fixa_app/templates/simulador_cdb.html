@@ -15,12 +15,16 @@
     <tr>
       <th scope="col">Modalidade</th>
       <th scope="col">Emissão</th>
-      <th scope="col">Indexado</th>
-      <th scope="col">Banco</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Indexador</th>      
       <th scope="col">Prazo</th>
       <th scope="col">Vencimento</th>
-      <th scope="col">Rentabilidade</th>      
+      <th scope="col">Rentabilidade</th>
+      <th scope="col">Bruta</th>
       <th scope="col">Capital</th>
+
+      <th scope="col">1 Mês</th>
+      <th scope="col">3 Meses</th>
       <th scope="col">6 Meses</th>
       <th scope="col">12 Meses</th>
       <th scope="col">24 Meses</th>
@@ -30,29 +34,30 @@
   </thead>
   <tbody>
     {% for investimento in json.parametros %}
-    {% calcula_rentabilidade_bruta investimento.indice di_anual investimento.rentabilidade as rentabilidade_bruta %}
-    
+    {% calcula_rentabilidade_bruta investimento.indice di_anual investimento.rentabilidade as rentabilidade_bruta %}    
     {% rendimento_em_reais capital rentabilidade_bruta as total_em_real %}
-    {% imposto_irpf_periodo capital rentabilidade_bruta '180' as imposto_6meses %}
-    {% imposto_irpf_periodo capital rentabilidade_bruta '360' as imposto_12meses %}
-    {% imposto_irpf_periodo capital rentabilidade_bruta '720' as imposto_24meses %}
-    {% imposto_irpf_periodo capital rentabilidade_bruta '721' as imposto_25meses %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '1' as imposto_1mes %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '3' as imposto_3meses %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '6' as imposto_6meses %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '12' as imposto_12meses %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '24' as imposto_24meses %}
+    {% imposto_irpf_periodo capital rentabilidade_bruta '25' as imposto_25meses %}
     <tr>
       <th scope="row">{{investimento.modalidade|title}}</th>
       <td>{{investimento.emissor}}</td>
+      <td>{{investimento.nome}}</th>
       <td>{{investimento.indice}}</td>
-      <td>{{investimento.rentabilidade}}%</td>
       <td>{{investimento.prazo}}</td>
       <td>{{investimento.vencimento}}</td>
-      <td>{{rentabilidade_bruta|floatformat:2}}%</td> 
-
+      <td>{{investimento.rentabilidade}}%</td>
+      <td>{{rentabilidade_bruta|floatformat:2}}%</td>
       <td>R${{capital|floatformat:"2g"}}</td>
-      
-      <td>R${{imposto_6meses.2|floatformat:"2g"}}<small><sub>R${{imposto_6meses.0|floatformat:"2g"}} R${{imposto_6meses.1|floatformat:"2g"}}</small></sub></td>
-      <td>R${{imposto_12meses.2|floatformat:"2g"}}<small><sub>R${{imposto_12meses.0|floatformat:"2g"}} R${{imposto_12meses.1|floatformat:"2g"}}</small></sub></td>
-      <td>R${{imposto_24meses.2|floatformat:"2g"}}<small><sub>R${{imposto_24meses.0|floatformat:"2g"}} R${{imposto_24meses.1|floatformat:"2g"}}</small></sub></td>
-      <td>R${{imposto_25meses.2|floatformat:"2g"}}<small><sub>R${{imposto_25meses.0|floatformat:"2g"}} R${{imposto_25meses.1|floatformat:"2g"}}</small></sub></td>
-      
+      <td title="Sem imposto: R${{imposto_1mes.0|floatformat:"2g"}} Com imposto: R${{imposto_1mes.1|floatformat:"2g"}}">R${{imposto_1mes.2|floatformat:"2g"}}</td>
+      <td title="Sem imposto: R${{imposto_3meses.0|floatformat:"2g"}} Com imposto: R${{imposto_3meses.1|floatformat:"2g"}}">R${{imposto_3meses.2|floatformat:"2g"}}</td>
+      <td title="Sem imposto: R${{imposto_6meses.0|floatformat:"2g"}} Com imposto: R${{imposto_6meses.1|floatformat:"2g"}}">R${{imposto_6meses.2|floatformat:"2g"}}</td>
+      <td title="Sem imposto: R${{imposto_12meses.0|floatformat:"2g"}} Com imposto: R${{imposto_12meses.1|floatformat:"2g"}}">R${{imposto_12meses.2|floatformat:"2g"}}</td>
+      <td title="Sem imposto: R${{imposto_24meses.0|floatformat:"2g"}} Com imposto: R${{imposto_24meses.1|floatformat:"2g"}}">R${{imposto_24meses.2|floatformat:"2g"}}</td>
+      <td title="Sem imposto: R${{imposto_25meses.0|floatformat:"2g"}} Com imposto: R${{imposto_25meses.1|floatformat:"2g"}}">R${{imposto_25meses.2|floatformat:"2g"}}</td>
     </tr>
     {% endfor %}
     

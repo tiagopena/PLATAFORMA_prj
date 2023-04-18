@@ -17,34 +17,33 @@ def calcula_rentabilidade_bruta(indice,di_anual,rentabilidade_banco):
         return(rentabilidade_banco)
 
 @register.simple_tag
-def imposto_irpf_periodo(capital,rentabilidade_anual,dias):
+def imposto_irpf_periodo(capital,rentabilidade_anual,mes):
     #rentabilidade_anual = 13.65
 
 
     rentabilidade_mensal = (((1 + (rentabilidade_anual/100))**(1/12)) - 1) * 100
     rentabilidade_dia = (((1 + (rentabilidade_anual/100))**(1/252)) - 1) * 100
 
+    rendimento_sem_imposto = (capital * ((1 + (rentabilidade_mensal/100))**(    ))) - capital
+
     print('===========================')
     print('Rentabilidade dia: {0}'.format(rentabilidade_dia))
     print('Rentabilidade mes: {0}'.format(rentabilidade_mensal))
+    print('Rentabilidade sem imposto: {0}'.format(rendimento_sem_imposto))
     print('===========================')
     
      
 
-    if int(dias) <= 180:
-        rendimento_sem_imposto = (capital * ((1 + (rentabilidade_mensal/100))**6)) - capital
+    if int(mes) <= 6:
         rendimento_com_imposto = rendimento_sem_imposto * (1 - (27.5/100))
         liquido = capital + rendimento_com_imposto
-    elif int(dias) >= 181 and int(dias) <= 360:
-        rendimento_sem_imposto = (capital * ((1 + (rentabilidade_mensal/100))**12)) - capital
+    elif int(mes) > 6 and int(mes) <= 12:
         rendimento_com_imposto = rendimento_sem_imposto * (1 - (20/100))
         liquido = capital + rendimento_com_imposto
-    elif int(dias) >= 361 and int(dias) <= 720:
-        rendimento_sem_imposto = (capital * ((1 + (rentabilidade_mensal/100))**24)) - capital
+    elif int(mes) > 12 and int(mes) <= 24:
         rendimento_com_imposto = rendimento_sem_imposto * (1 - (17.5/100))
         liquido = capital + rendimento_com_imposto
-    elif int(dias) >= 721:
-        rendimento_sem_imposto = (capital * ((1 + (rentabilidade_mensal/100))**25)) - capital
+    elif int(mes) > 24:
         rendimento_com_imposto = rendimento_sem_imposto * (1 - (15/100))
         liquido = capital + rendimento_com_imposto
     else:

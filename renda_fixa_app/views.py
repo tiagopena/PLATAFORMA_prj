@@ -8,7 +8,13 @@ def registrar_compra(request):
     return render (request, 'registrar_compra.html')
 
 def consultar_carteira(request):
-   return render (request, 'consultar_carteira.html')
+   json = Arquivos_Class.carrega_simulador()
+
+   conteudo = {
+         'json' : json,
+      }     
+
+   return render (request, 'consultar_carteira_renda_fixa.html', context=conteudo)
 
 def simulador(request,tipo):
    if tipo == 'menu':

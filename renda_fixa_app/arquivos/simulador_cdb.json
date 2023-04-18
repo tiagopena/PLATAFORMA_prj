@@ -50,7 +50,16 @@
             "prazo":"720",
             "rentabilidade":9.86110,
             "vencimento":"2025-03-17"
+        },
+        {
+            "modalidade":"prefixada",
+            "indice":"CDI",
+            "emissor":"XP",
+            "nome":"CDB PAGBANK",
+            "liquidez":"nao",
+            "prazo":"60",
+            "rentabilidade":102,
+            "vencimento":"2023-05-22"
         }
-
     ]
 }
