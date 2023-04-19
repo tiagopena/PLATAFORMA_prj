@@ -1,5 +1,7 @@
 {% extends "base_generic.html" %}
 
+{% load tags_extra %}
+
 {% block canonical %}
 <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dropdowns/">
 {% endblock %}
@@ -13,28 +15,38 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-          <th scope="col">Modalidade</th>
-          <th scope="col">Indice</th>
-          <th scope="col">Emissor</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Liquidez</th>
-          <th scope="col">Prazo</th>
-          <th scope="col">Rentabilidade</th>
-          <th scope="col">Vencimento</th>
+            <th scope="col">Emissor</th>
+            <th scope="col">Modalidade</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Liquidez</th>
+            <th scope="col">Prazo</th>
+            <th scope="col">Indice</th>
+            <th scope="col">Rentabilidade</th>
+            <th scope="col">R. 1 Mês</th>
+            <th scope="col">R. 3 Meses</th>
+            <th scope="col">R. 6 Meses</th>
+            <th scope="col">R. 1 Ano</th>
+            <th scope="col">R. 2 Anos</th>
+            <th scope="col">R. +2 Anos</th>
         </tr>
       </thead>
       <tbody>
         {% for item in json.parametros %}
         <tr>
-            
+            <td>{{item.emissor}}</td>            
             <td>{{item.modalidade}}</td>
-            <td>{{item.indice}}</td>
-            <td>{{item.emissor}}</td>
             <td>{{item.nome}}</td>
             <td>{{item.liquidez}}</td>
             <td>{{item.prazo}}</td>
+            <td>{{item.indice}}</td>
             <td>{{item.rentabilidade}}</td>
-            <td>{{item.vencimento}}</td>
+            <td>{% calcula_rentabilidade_cdb_imposto 'cdi' '13.65' '1' item.rentabilidade %}</td>
+            <td>{% calcula_rentabilidade_cdb_imposto 'cdi' '13.65' '3' item.rentabilidade %}</td>
+            <td>{% calcula_rentabilidade_cdb_imposto 'cdi' '13.65' '6' item.rentabilidade %}</td>
+            <td>{% calcula_rentabilidade_cdb_imposto 'cdi' '13.65' '12' item.rentabilidade %}</td>
+            <td>{% calcula_rentabilidade_cdb_imposto 'cdi' '13.65' '24' item.rentabilidade %}</td>
+            <td>{% calcula_rentabilidade_cdb_imposto 'cdi' '13.65' '25' item.rentabilidade %}</td>
+            
             
 
         </tr>

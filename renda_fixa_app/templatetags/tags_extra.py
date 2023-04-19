@@ -7,6 +7,24 @@ from django.template.defaultfilters import stringfilter
 #from bcb import currency,PTAX
 
 register = template.Library()
+
+@register.simple_tag
+def calcula_rentabilidade_cdb_imposto(indice,taxa,meses,rentabilidade_banco):
+    if indice.lower() == 'cdi':
+        taxa_mensal = (((1 + (float(taxa)/100)) ** (1/12)) - 1) * 100
+        rentabilidade_real_mesal = taxa_mensal * (rentabilidade_banco/100)
+        taxa_real_sem_imposto = (1 + (rentabilidade_real_mesal/100)) ** int(meses)
+        if int(meses) <= 6:
+            rentabilidade_com_imposto = taxa_real_sem_imposto * (1 - 0.275)
+        elif int(meses) <= 12:
+            rentabilidade_com_imposto = taxa_real_sem_imposto * (1 - 0.20)
+        elif int(meses) <= 24:
+            rentabilidade_com_imposto = taxa_real_sem_imposto * (1 - 0.175)
+        elif int(meses) <= 25:
+            rentabilidade_com_imposto = taxa_real_sem_imposto * (1 - 0.15)
+        return(rentabilidade_com_imposto)
+    else:
+        return(rentabilidade_banco)
  
 @register.simple_tag
 def calcula_rentabilidade_bruta(indice,di_anual,rentabilidade_banco):
